@@ -14,10 +14,12 @@ import com.d11.page.LoginPage;
 public class GetPlayerStats extends BaseTest {
 
 	XSSFWorkbook workbook = new XSSFWorkbook();
+	XSSFSheet sheet = workbook.createSheet("Stats");
 	String FILE_NAME = "PlayerInfo.xlsx";
 	String contestName = null;
 	String[] headers = null;
 	int contests = 0;
+	int rowNum = 1;
 
 	@BeforeClass
 	public void loadPages() {
@@ -32,11 +34,11 @@ public class GetPlayerStats extends BaseTest {
 		homePage.clickResults();
 		//Index starts from 0(1), 1(2)
 		contests = homePage.getContestJoinedCount();
-		
+
 		for(int contestNo = 0; contestNo < contests; contestNo++){
 			if(contestNo != 0)
-			homePage.clickResults();
-			
+				homePage.clickResults();
+
 			homePage.clickContestJoined(contestNo);
 			homePage.clickArrowRight();
 			contestName = homePage.getContestName();
@@ -45,43 +47,51 @@ public class GetPlayerStats extends BaseTest {
 
 			String[][] playersInfo = homePage.getPlayersInfo();
 			writeToExcel(playersInfo, contestName);
-			
+
 			for(int i = 0 ; i < 3; i++) {
 				homePage.clickArrowBack();
 			}
-			
-			try {
-				FileOutputStream outputStream = new FileOutputStream(FILE_NAME);
-				workbook.write(outputStream);
-				workbook.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		}
+
+		try {
+			FileOutputStream outputStream = new FileOutputStream(FILE_NAME);
+			workbook.write(outputStream);
+			workbook.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
 	private void writeToExcel(String[][] playersInfo, String contestName) {
-		int rowNum = 1;
-		System.out.println("Sheets........."+workbook.getNumberOfSheets());
-		XSSFSheet sheet = workbook.createSheet(contestName);
+		int colNum = 1;
+		Row row = null;
 		//Player Header
-		Row row = sheet.createRow(1);
-		int colNum = 0;
-		for (String header : headers) {
-			Cell cell = row.createCell(colNum++);
-			cell.setCellValue((String) header);
+		if(sheet.getPhysicalNumberOfRows() == 0) {
+			row = sheet.createRow(0);
+			Cell cell = row.createCell(0);
+			cell.setCellValue((String) "V/S");
+			for (String header : headers) {
+				cell = row.createCell(colNum++);
+				cell.setCellValue((String) header);
+			}
 		}
 
 		//Player Data
-		colNum = 0;
+		colNum = 1;
 		for (String[] player : playersInfo) {
 			row = sheet.createRow(rowNum++);
+			Cell cell = row.createCell(0);
+			cell.setCellValue((String) contestName);
 			for (String field : player) {
-				Cell cell = row.createCell(colNum++);
+				cell = row.createCell(colNum++);
+				if(colNum == 2)
 				cell.setCellValue((String) field);
+				else
+				cell.setCellValue((Double) Double.parseDouble(field));	
 			}
+			colNum = 1;
 		}
 	}
 }

@@ -19,7 +19,7 @@ public class BasePage {
 		Actions action = new Actions(this.driver);
 		action.moveToElement(we).perform();
 		action.click(we).build().perform();
-		waitFor(3);
+		waitFor(2);
 	}
 
 	public void sendKeys(WebElement we, String input) {

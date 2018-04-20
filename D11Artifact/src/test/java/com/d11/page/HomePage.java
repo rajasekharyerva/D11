@@ -1,4 +1,7 @@
 package com.d11.page;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -92,12 +95,17 @@ public class HomePage extends BasePage{
 	public String[][] getPlayersInfo() {
 		String[][] tableData = new String[22][15];
 		int rowSize = getRowsSize();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		System.out.println("Reading Players..." + dateFormat.format(new Date()));
 		for(int rowInd = 0; rowInd < rowSize; rowInd++) {
+			System.out.println("Reading Player "+ rowInd + 1 + ": " + dateFormat.format(new Date()));
 			List<WebElement> cols = rows.get(rowInd).findElements(By.xpath("./td"));
 			for(int colInd = 0; colInd < cols.size(); colInd++) {
 				tableData[rowInd][colInd] = cols.get(colInd).getText();
 			}
+			System.out.println("Reading Player "+ rowInd + 1 + ": " + dateFormat.format(new Date()));
 		}
+		System.out.println("Reading Players completed..." + dateFormat.format(new Date()));
 		return tableData;
 	}
 
