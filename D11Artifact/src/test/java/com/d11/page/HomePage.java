@@ -94,16 +94,19 @@ public class HomePage extends BasePage{
 
 	public String[][] getPlayersInfo() {
 		String[][] tableData = new String[22][15];
-		int rowSize = getRowsSize();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		System.out.println("Reading Players..." + dateFormat.format(new Date()));
-		for(int rowInd = 0; rowInd < rowSize; rowInd++) {
-			System.out.println("Reading Player "+ rowInd + 1 + ": " + dateFormat.format(new Date()));
-			List<WebElement> cols = rows.get(rowInd).findElements(By.xpath("./td"));
-			for(int colInd = 0; colInd < cols.size(); colInd++) {
-				tableData[rowInd][colInd] = cols.get(colInd).getText();
+		int rowInd = 0;
+		for(WebElement rEl : rows) {
+			System.out.println("Reading Player "+ (rowInd + 1) + ": " + dateFormat.format(new Date()));
+			List<WebElement> cols = rEl.findElements(By.xpath("./td"));
+			int colInd = 0;
+			for(WebElement cEl : cols) {
+				tableData[rowInd][colInd] = cEl.getText();
+				colInd++;
 			}
-			System.out.println("Reading Player "+ rowInd + 1 + ": " + dateFormat.format(new Date()));
+			System.out.println("Reading Player "+ (rowInd + 1) + " completed: " + dateFormat.format(new Date()));
+			rowInd++;
 		}
 		System.out.println("Reading Players completed..." + dateFormat.format(new Date()));
 		return tableData;
