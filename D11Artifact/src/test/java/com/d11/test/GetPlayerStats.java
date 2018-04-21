@@ -122,6 +122,7 @@ public class GetPlayerStats extends BaseTest {
 			row = sheet.createRow(0);
 			Cell cell = row.createCell(0);
 			cell.setCellValue((String) "VS");
+			cell = row.createCell(1);
 			cell.setCellValue((String) "Team");
 			for (String header : headers) {
 				cell = row.createCell(colNum++);
