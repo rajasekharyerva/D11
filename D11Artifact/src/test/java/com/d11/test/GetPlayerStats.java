@@ -30,6 +30,7 @@ public class GetPlayerStats extends BaseTest {
 	String[] headers = null;
 	int contests = 0;
 	int rowNum = 1;
+	int counter = 1;
 	Map<String, String> playerTeamMap = new HashMap<String, String>();
 
 	@BeforeClass
@@ -114,7 +115,7 @@ public class GetPlayerStats extends BaseTest {
 	}
 
 	private void writeToExcel(String[][] playersInfo, String contestName) {
-		int colNum = 2;
+		int colNum = 3;
 		Row row = null;
 		String playerName = null;
 		//Player Header
@@ -124,6 +125,8 @@ public class GetPlayerStats extends BaseTest {
 			cell.setCellValue((String) "VS");
 			cell = row.createCell(1);
 			cell.setCellValue((String) "Team");
+			cell = row.createCell(2);
+			cell.setCellValue((String) "SNo");
 			for (String header : headers) {
 				cell = row.createCell(colNum++);
 				cell.setCellValue((String) header);
@@ -131,7 +134,7 @@ public class GetPlayerStats extends BaseTest {
 		}
 
 		//Player Data
-		colNum = 2;
+		colNum = 3;
 		for (String[] player : playersInfo) {
 			row = sheet.createRow(rowNum++);
 			Cell cell = row.createCell(0);
@@ -140,17 +143,20 @@ public class GetPlayerStats extends BaseTest {
 			
 			for (String field : player) {
 				cell = row.createCell(colNum++);
-				if(colNum == 3) {
+				if(colNum == 4) {
 					cell.setCellValue((String) field);
 					playerName = field;
 				}
 				else
 					cell.setCellValue((Double) Double.parseDouble(field));	
 			}
-			colNum = 2;
+			colNum = 3;
 			
 			cell = row.createCell(1);
 			cell.setCellValue((String) playerTeamMap.get(playerName));
+			cell = row.createCell(2);
+			cell.setCellValue((Integer) counter);
 		}
+		counter++;
 	}
 }
