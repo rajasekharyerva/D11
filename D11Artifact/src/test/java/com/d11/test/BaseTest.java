@@ -11,9 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import com.d11.page.HomePage;
 import com.d11.page.LoginPage;
 
-
 public class BaseTest {
-
 	public static Properties prop = null;
 	String configPropPath = "properties/config.properties";
 	LoginPage loginPage;
@@ -62,10 +60,8 @@ public class BaseTest {
 		homePage.clickLogout();
 	}
 
-
 	@AfterClass
 	public void quitDriver() {
 		driver.quit();
 	}
-
 }

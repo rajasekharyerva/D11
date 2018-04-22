@@ -33,7 +33,6 @@ public class GetPlayerStats extends BaseTest {
 	int rowNum = 1;
 	int counter = 1;
 	int rowNo = 1;
-
 	Map<String, String> playerTeamMap = new HashMap<String, String>();
 
 	@BeforeClass
@@ -87,7 +86,6 @@ public class GetPlayerStats extends BaseTest {
 			}
 		}
 
-
 		for(int contestNo = 0; contestNo < contests; contestNo++){
 			if(contestNo != 0)
 				homePage.clickResults();
@@ -124,15 +122,11 @@ public class GetPlayerStats extends BaseTest {
 		String rank = null;
 		int teams = 0;
 		int teamsInfo = 0;
-		String plName = null;
-		String plPoints = null;
 		//My Contest, Results
 		homePage.clickMyContests();
 		homePage.clickLive();
 		homePage.clickContestJoined(0);
 		int inProgress = homePage.getInProgressCount();
-
-
 
 		for(int ind = 0; ind < inProgress; ind++){
 			winnings = homePage.getWinnings(ind);

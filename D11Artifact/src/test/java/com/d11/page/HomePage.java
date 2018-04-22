@@ -209,5 +209,4 @@ public class HomePage extends BasePage{
 	public int getRowsSize() {
 		return this.rows.size();
 	}
-
 }
