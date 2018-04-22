@@ -119,7 +119,7 @@ public class GetPlayerStats extends BaseTest {
 	public void getLiveResults() {
 		int winnings = 0;
 		int entry = 0;
-		String rank = null;
+		int rank = 0;
 		int teams = 0;
 		int teamsInfo = 0;
 		//My Contest, Results
@@ -140,12 +140,40 @@ public class GetPlayerStats extends BaseTest {
 			//Select Team
 			teamsInfo  = homePage.getAllTeamsCount();
 			for(int tInd = 0; tInd < teamsInfo; tInd++) {
+				String tPoins = homePage.getTeamPoints(tInd);
 				homePage.clickTeam(tInd);
 
-				writeToExcelLive(tInd, winnings, entry, rank, teams);
+				writeToExcelLive(tInd, winnings, entry, rank, teams, tPoins);
 				homePage.clickClose();
 			}
 
+			int pRows = sheet.getPhysicalNumberOfRows();
+			double wins = 0;
+			double ents = 0;
+			double amt = 0;
+			
+            for(int i =1; i <pRows; i++) {
+                Row currentRow = sheet.getRow(i);
+                if(currentRow.getCell(0) != null) {
+                	wins = currentRow.getCell(0).getNumericCellValue() + wins;
+                }
+                if(currentRow.getCell(1) != null){
+                	ents = currentRow.getCell(1).getNumericCellValue() + ents;
+                }
+                
+                if(currentRow.getCell(2) != null){
+                	if(currentRow.getCell(2).getNumericCellValue() == 1.0)
+                	amt = currentRow.getCell(0).getNumericCellValue() + amt;
+                }
+            }
+			Row resRow = sheet.createRow(rowNo);
+			Cell cell = resRow.createCell(0);
+			cell.setCellValue((Double) wins);
+			cell = resRow.createCell(1);
+			cell.setCellValue((Double) ents);
+			cell = resRow.createCell(2);
+			cell.setCellValue((Double) amt);
+			
 			homePage.clickArrowBack();
 		}
 
@@ -161,7 +189,7 @@ public class GetPlayerStats extends BaseTest {
 
 		homePage.clickArrowBack();
 	}
-
+	
 	private void writeToExcel(String[][] playersInfo, String contestName) {
 		int colNum = 3;
 		Row row = null;
@@ -208,8 +236,8 @@ public class GetPlayerStats extends BaseTest {
 		counter++;
 	}
 
-	private void writeToExcelLive(int tInd, int winnings, int entry, String rank, int teams) {
-		int colNum = 5;
+	private void writeToExcelLive(int tInd, int winnings, int entry, int rank, int teams, String tPoints) {
+		int colNum = 6;
 		Row row = null;
 		Cell cell = null;
 		String playerName = null;
@@ -228,6 +256,8 @@ public class GetPlayerStats extends BaseTest {
 			cell.setCellValue((String) "Teams");
 			cell = row.createCell(4);
 			cell.setCellValue((String) "Team Name");
+			cell = row.createCell(5);
+			cell.setCellValue((String) "Team Points");
 			for (int i = 1; i < 12; i++) {
 				cell = row.createCell(colNum++);
 				cell.setCellValue((String) "Player" + i);
@@ -242,15 +272,18 @@ public class GetPlayerStats extends BaseTest {
 			cell = row.createCell(1);
 			cell.setCellValue((Integer) entry);
 			cell = row.createCell(2);
-			cell.setCellValue((String) rank);
+			cell.setCellValue((Integer) rank);
 			cell = row.createCell(3);
 			cell.setCellValue((Integer) teams);
-			cell = row.createCell(4);
-			teamName = homePage.getTeamName();
-			cell.setCellValue((String) teamName);
 		}
+		
+		cell = row.createCell(4);
+		teamName = homePage.getTeamName();
+		cell.setCellValue((String) teamName);
+		cell = row.createCell(5);
+		cell.setCellValue((String) tPoints);
 
-		colNum = 5;
+		colNum = 6;
 		//Player Data
 		for(int plInd = 0; plInd < 11; plInd++) {
 			cell = row.createCell(colNum);

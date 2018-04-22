@@ -43,11 +43,14 @@ public class HomePage extends BasePage{
 	@FindBy(xpath="//div[@class='contest-card__card__cta-rank']")
 	List<WebElement> rank;
 	
-	@FindBy(xpath="//div[text()='ENTRY']/following-sibling::div/span/span[2]")
+	@FindBy(xpath="//div[text()='TEAMS']/following-sibling::div")
 	List<WebElement> teams;
 	
 	@FindBy(xpath="//div[@class='leaderboard__players__user-information']")
 	List<WebElement> allTeams;
+	
+	@FindBy(xpath="//div[@class='leaderboard__players__user-information__points']/div[1]")
+	List<WebElement> teamPoints;
 
 	@FindBy(xpath="//div[contains(@class,'infobarContentLeft_')]")
 	WebElement contestName;
@@ -161,9 +164,9 @@ public class HomePage extends BasePage{
 		return Integer.parseInt(entry.get(index).getText());
 	}
 	
-	public String getRank(int index) {
+	public int getRank(int index) {
 		//#
-		return rank.get(index).getText();
+		return Integer.parseInt(rank.get(index).getText().substring(1));
 	}
 	
 	public int getTeams(int index) {
@@ -172,6 +175,10 @@ public class HomePage extends BasePage{
 	
 	public String getPlayerName(int index) {
 		return playerName.get(index).getText();
+	}
+	
+	public String getTeamPoints(int index) {
+		return teamPoints.get(index).getText();
 	}
 	
 	public String getPlayerPoints(int index) {

@@ -9,7 +9,7 @@
           <include name="signOut"/>
           <include name="quitDriver"/>
           <include name="signIn"/>
-          <include name="getLiveResults"/>
+          <include name="sumEnrtyWinnings"/>
           <include name="readProperties"/>
         </methods>
       </class> <!-- com.d11.test.GetPlayerStats -->
