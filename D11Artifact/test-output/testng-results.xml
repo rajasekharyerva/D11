@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+<testng-results skipped="0" failed="0" ignored="1" total="2" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="538644" started-at="2018-04-21T16:27:46Z" finished-at="2018-04-21T16:36:44Z">
+  <suite name="Default suite" duration-ms="262410" started-at="2018-04-22T16:18:09Z" finished-at="2018-04-22T16:22:31Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="538644" started-at="2018-04-21T16:27:46Z" finished-at="2018-04-21T16:36:44Z">
+    <test name="Default test" duration-ms="262410" started-at="2018-04-22T16:18:09Z" finished-at="2018-04-22T16:22:31Z">
       <class name="com.d11.test.GetPlayerStats">
-        <test-method status="PASS" signature="readProperties()[pri:0, instance:com.d11.test.GetPlayerStats@50eac852]" name="readProperties" is-config="true" duration-ms="7811" started-at="2018-04-21T16:27:46Z" finished-at="2018-04-21T16:27:54Z">
+        <test-method status="PASS" signature="readProperties()[pri:0, instance:com.d11.test.GetPlayerStats@50eac852]" name="readProperties" is-config="true" duration-ms="6763" started-at="2018-04-22T16:18:09Z" finished-at="2018-04-22T16:18:16Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- readProperties -->
-        <test-method status="PASS" signature="loadPages()[pri:0, instance:com.d11.test.GetPlayerStats@50eac852]" name="loadPages" is-config="true" duration-ms="270" started-at="2018-04-21T16:27:54Z" finished-at="2018-04-21T16:27:54Z">
+        <test-method status="PASS" signature="loadPages()[pri:0, instance:com.d11.test.GetPlayerStats@50eac852]" name="loadPages" is-config="true" duration-ms="267" started-at="2018-04-22T16:18:16Z" finished-at="2018-04-22T16:18:16Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- loadPages -->
-        <test-method status="PASS" signature="signIn()[pri:0, instance:com.d11.test.GetPlayerStats@50eac852]" name="signIn" is-config="true" duration-ms="13097" started-at="2018-04-21T16:27:54Z" finished-at="2018-04-21T16:28:07Z">
+        <test-method status="PASS" signature="signIn()[pri:0, instance:com.d11.test.GetPlayerStats@50eac852]" name="signIn" is-config="true" duration-ms="11529" started-at="2018-04-22T16:18:16Z" finished-at="2018-04-22T16:18:28Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- signIn -->
-        <test-method status="PASS" signature="getPlayerStats()[pri:0, instance:com.d11.test.GetPlayerStats@50eac852]" name="getPlayerStats" duration-ms="512292" started-at="2018-04-21T16:28:07Z" finished-at="2018-04-21T16:36:39Z">
+        <test-method status="PASS" signature="getLiveResults()[pri:0, instance:com.d11.test.GetPlayerStats@50eac852]" name="getLiveResults" duration-ms="239089" started-at="2018-04-22T16:18:28Z" finished-at="2018-04-22T16:22:27Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- getPlayerStats -->
-        <test-method status="PASS" signature="signOut()[pri:0, instance:com.d11.test.GetPlayerStats@50eac852]" name="signOut" is-config="true" duration-ms="4785" started-at="2018-04-21T16:36:39Z" finished-at="2018-04-21T16:36:44Z">
+        </test-method> <!-- getLiveResults -->
+        <test-method status="PASS" signature="signOut()[pri:0, instance:com.d11.test.GetPlayerStats@50eac852]" name="signOut" is-config="true" duration-ms="4573" started-at="2018-04-22T16:22:27Z" finished-at="2018-04-22T16:22:31Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- signOut -->
-        <test-method status="PASS" signature="quitDriver()[pri:0, instance:com.d11.test.GetPlayerStats@50eac852]" name="quitDriver" is-config="true" duration-ms="298" started-at="2018-04-21T16:36:44Z" finished-at="2018-04-21T16:36:44Z">
+        <test-method status="PASS" signature="quitDriver()[pri:0, instance:com.d11.test.GetPlayerStats@50eac852]" name="quitDriver" is-config="true" duration-ms="117" started-at="2018-04-22T16:22:31Z" finished-at="2018-04-22T16:22:31Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- quitDriver -->

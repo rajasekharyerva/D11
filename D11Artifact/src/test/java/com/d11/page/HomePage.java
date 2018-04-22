@@ -15,9 +15,39 @@ public class HomePage extends BasePage{
 
 	@FindBy(xpath="//div[text()='Results']")
 	WebElement results;
+	
+	@FindBy(xpath="//div[text()='Live']")
+	WebElement live;
 
-	@FindBy(xpath="//div[text()='1 Contest Joined']")
+	@FindBy(xpath="//div[text()='Contest Joined' or contains(text(),'Contests Joined')]")
 	List<WebElement> contestJoined;
+	
+	@FindBy(xpath="//a[@class='contest-card__in-progress']")
+	List<WebElement> inProgress;
+	
+	@FindBy(xpath="//div[text()='WINNINGS']/following-sibling::div/span/span[2]")
+	List<WebElement> winnigs;
+	
+	@FindBy(xpath="//div[contains(@class,'fieldPlayerTitle_')]")
+	List<WebElement> playerName;
+	
+	@FindBy(xpath="//div[contains(@class,'playerPoints_')]")
+	List<WebElement> playerPoints;
+	
+	@FindBy(xpath="//div[@class='toolbar-title']")
+	WebElement teamName;
+	
+	@FindBy(xpath="//div[text()='ENTRY']/following-sibling::div/span/span[2]")
+	List<WebElement> entry;
+	
+	@FindBy(xpath="//div[@class='contest-card__card__cta-rank']")
+	List<WebElement> rank;
+	
+	@FindBy(xpath="//div[text()='ENTRY']/following-sibling::div/span/span[2]")
+	List<WebElement> teams;
+	
+	@FindBy(xpath="//div[@class='leaderboard__players__user-information']")
+	List<WebElement> allTeams;
 
 	@FindBy(xpath="//div[contains(@class,'infobarContentLeft_')]")
 	WebElement contestName;
@@ -39,6 +69,9 @@ public class HomePage extends BasePage{
 
 	@FindBy(xpath="//div[text()='More']")
 	WebElement more;
+	
+	@FindBy(xpath="//i[text()='close']")
+	WebElement close;
 
 	@FindBy(xpath="//div[text()='Log Out']")
 	WebElement logOut;
@@ -51,9 +84,17 @@ public class HomePage extends BasePage{
 	public void clickMyContests() {
 		this.click(myContests);
 	}
+	
+	public void clickClose() {
+		this.click(close);
+	}
 
 	public void clickResults() {
 		this.click(results);
+	}
+	
+	public void clickLive() {
+		this.click(live);
 	}
 
 	public void clickArrowRight() {
@@ -75,6 +116,10 @@ public class HomePage extends BasePage{
 	public int getContestJoinedCount() {
 		return contestJoined.size();
 	}
+	
+	public int getInProgressCount() {
+		return inProgress.size();
+	}
 
 	public int getContestJoined() {
 		return contestJoined.size();
@@ -83,6 +128,22 @@ public class HomePage extends BasePage{
 	public void clickScore() {
 		this.click(score);
 	}
+	
+	public void clickInProgress(int index) {
+		this.click(inProgress.get(index));
+	}
+	
+	public void clickTeam(int index) {
+		this.click(allTeams.get(index));
+	}
+	
+	public int getAllTeamsCount() {
+		return allTeams.size();
+	}
+	
+	public String getTeamName() {
+		return teamName.getText();
+	}
 
 	public void clickMore() {
 		this.click(more);
@@ -90,6 +151,31 @@ public class HomePage extends BasePage{
 
 	public void clickLogout() {
 		this.click(logOut);
+	}
+	
+	public int getWinnings(int index) {
+		return Integer.parseInt(winnigs.get(index).getText());
+	}
+	
+	public int getEntry(int index) {
+		return Integer.parseInt(entry.get(index).getText());
+	}
+	
+	public String getRank(int index) {
+		//#
+		return rank.get(index).getText();
+	}
+	
+	public int getTeams(int index) {
+		return Integer.parseInt(teams.get(index).getText());
+	}
+	
+	public String getPlayerName(int index) {
+		return playerName.get(index).getText();
+	}
+	
+	public String getPlayerPoints(int index) {
+		return playerPoints.get(index).getText();
 	}
 
 	public String[][] getPlayersInfo() {

@@ -24,6 +24,7 @@ public class GetPlayerStats extends BaseTest {
 	XSSFWorkbook workbook = new XSSFWorkbook();
 	XSSFSheet sheet = workbook.createSheet("Stats");
 	String FILE_NAME = "PlayerInfo.xlsx";
+	String IN_ACTION = "InAction.xlsx";
 	String READ_FILE = "PlayerTeams.txt";
 	String WRITE_FILE = "PlayerTeamsUpdated.txt";
 	String contestName = null;
@@ -31,6 +32,8 @@ public class GetPlayerStats extends BaseTest {
 	int contests = 0;
 	int rowNum = 1;
 	int counter = 1;
+	int rowNo = 1;
+
 	Map<String, String> playerTeamMap = new HashMap<String, String>();
 
 	@BeforeClass
@@ -39,7 +42,7 @@ public class GetPlayerStats extends BaseTest {
 		homePage = new HomePage(driver);
 	}
 
-	@Test
+	@Test(enabled=false)
 	public void getPlayerStats() {
 		//My Contest, Results
 		homePage.clickMyContests();
@@ -63,10 +66,10 @@ public class GetPlayerStats extends BaseTest {
 				String[] data = sCurrentLine.split(":");
 				playerTeamMap.put(data[0].trim(), data[1].trim());
 			}
-			
+
 			for (Map.Entry<String,String> entry : playerTeamMap.entrySet()) 
 				bw.write(entry.getKey() + ":" + entry.getValue()+ "\n");
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -114,6 +117,57 @@ public class GetPlayerStats extends BaseTest {
 		}
 	}
 
+	@Test()
+	public void getLiveResults() {
+		int winnings = 0;
+		int entry = 0;
+		String rank = null;
+		int teams = 0;
+		int teamsInfo = 0;
+		String plName = null;
+		String plPoints = null;
+		//My Contest, Results
+		homePage.clickMyContests();
+		homePage.clickLive();
+		homePage.clickContestJoined(0);
+		int inProgress = homePage.getInProgressCount();
+
+
+
+		for(int ind = 0; ind < inProgress; ind++){
+			winnings = homePage.getWinnings(ind);
+			entry = homePage.getEntry(ind);
+			rank =homePage.getRank(ind);
+			teams = homePage.getTeams(ind);
+
+			//Select Entry
+			homePage.clickInProgress(ind);
+
+			//Select Team
+			teamsInfo  = homePage.getAllTeamsCount();
+			for(int tInd = 0; tInd < teamsInfo; tInd++) {
+				homePage.clickTeam(tInd);
+
+				writeToExcelLive(tInd, winnings, entry, rank, teams);
+				homePage.clickClose();
+			}
+
+			homePage.clickArrowBack();
+		}
+
+		try {
+			FileOutputStream outputStream = new FileOutputStream(IN_ACTION);
+			workbook.write(outputStream);
+			workbook.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		homePage.clickArrowBack();
+	}
+
 	private void writeToExcel(String[][] playersInfo, String contestName) {
 		int colNum = 3;
 		Row row = null;
@@ -140,7 +194,7 @@ public class GetPlayerStats extends BaseTest {
 			Cell cell = row.createCell(0);
 			cell.setCellValue((String) contestName);
 			//String[] teams = contestName.split("vs");
-			
+
 			for (String field : player) {
 				cell = row.createCell(colNum++);
 				if(colNum == 4) {
@@ -151,12 +205,67 @@ public class GetPlayerStats extends BaseTest {
 					cell.setCellValue((Double) Double.parseDouble(field));	
 			}
 			colNum = 3;
-			
+
 			cell = row.createCell(1);
 			cell.setCellValue((String) playerTeamMap.get(playerName));
 			cell = row.createCell(2);
 			cell.setCellValue((Integer) counter);
 		}
 		counter++;
+	}
+
+	private void writeToExcelLive(int tInd, int winnings, int entry, String rank, int teams) {
+		int colNum = 5;
+		Row row = null;
+		Cell cell = null;
+		String playerName = null;
+		String playerPoints = null;
+		String teamName = null;
+		//Player Header
+		if(sheet.getPhysicalNumberOfRows() == 0) {
+			row = sheet.createRow(0);
+			cell = row.createCell(0);
+			cell.setCellValue((String) "Winnings");
+			cell = row.createCell(1);
+			cell.setCellValue((String) "Entry");
+			cell = row.createCell(2);
+			cell.setCellValue((String) "Rank");
+			cell = row.createCell(3);
+			cell.setCellValue((String) "Teams");
+			cell = row.createCell(4);
+			cell.setCellValue((String) "Team Name");
+			for (int i = 1; i < 12; i++) {
+				cell = row.createCell(colNum++);
+				cell.setCellValue((String) "Player" + i);
+			}
+		}
+
+		//Team name
+		row = sheet.createRow(rowNo);
+		if(tInd == 0) {
+			cell = row.createCell(0);
+			cell.setCellValue((Integer) winnings);
+			cell = row.createCell(1);
+			cell.setCellValue((Integer) entry);
+			cell = row.createCell(2);
+			cell.setCellValue((String) rank);
+			cell = row.createCell(3);
+			cell.setCellValue((Integer) teams);
+			cell = row.createCell(4);
+			teamName = homePage.getTeamName();
+			cell.setCellValue((String) teamName);
+		}
+
+		colNum = 5;
+		//Player Data
+		for(int plInd = 0; plInd < 11; plInd++) {
+			cell = row.createCell(colNum);
+			playerName = homePage.getPlayerName(plInd);
+			playerPoints = homePage.getPlayerPoints(plInd);
+			cell.setCellValue((String) playerName.substring(0, 5)+":"+playerPoints);
+			colNum++;
+		}
+
+		rowNo++;
 	}
 }
