@@ -23,8 +23,9 @@ public class GetPlayerStats extends BaseTest {
 
 	XSSFWorkbook workbook = new XSSFWorkbook();
 	XSSFSheet sheet = workbook.createSheet("Stats");
-	String FILE_NAME = "PlayerInfo.xlsx";
-	String IN_ACTION = "InAction.xlsx";
+	String PLAYER_STATS = "PlayerStats.xlsx";
+	String RESULTS = "Results.xlsx";
+	String IN_PROGRESS = "InProgress.xlsx";
 	String READ_FILE = "PlayerTeams.txt";
 	String WRITE_FILE = "PlayerTeamsUpdated.txt";
 	String contestName = null;
@@ -42,6 +43,81 @@ public class GetPlayerStats extends BaseTest {
 	}
 
 	@Test(enabled=false)
+	public void getAR() {
+		long winnings = 0;
+		int entry =0;
+		long rank =0;
+		long teams = 0;
+		//My Contest, Results
+		homePage.clickMyContests();
+		homePage.clickResults();
+		//Index starts from 0(1), 1(2)
+		contests = homePage.getContestJoinedCount();
+
+		for(int contestNo = 0; contestNo < contests; contestNo++){
+			if(contestNo != 0)
+				homePage.clickResults();
+
+			homePage.clickContestJoined(contestNo);
+			contestName = homePage.getContestName();
+
+			int inProgress = homePage.getInProgressCount();
+			for(int ind = 0; ind < inProgress; ind++){
+				winnings = homePage.getWinnings(ind);
+				entry = homePage.getEntry(ind);
+				rank =homePage.getRank(ind);
+				teams = homePage.getTeams(ind);
+
+				//Select Entry
+				homePage.clickInProgress(ind);
+				//int lBCount = homePage.getLeaderBoardCount();
+				int myTeams = homePage.getMyTeamsCount();
+
+				//Select Team
+				for(int tInd = 0; tInd < myTeams; tInd++) {
+					String myTeam = homePage.getMyTeamName(tInd);
+					String myPoints = homePage.getMyTeamPoints(tInd);
+					String myRank = homePage.getMyTeamRank(tInd);
+					int myWon = homePage.getMyTeamWon(tInd);
+					writeToExcelWon(tInd, winnings, entry, teams, rank, myTeam, myPoints, myRank, myWon);
+				}
+				homePage.clickArrowBack();
+			}
+			homePage.clickArrowBack();
+		}
+
+		int pRows = sheet.getPhysicalNumberOfRows();
+		double ents = 0;
+		double won = 0;
+
+		for(int i =1; i <pRows; i++) {
+			Row currentRow = sheet.getRow(i);
+			if(currentRow.getCell(1) != null){
+				ents = currentRow.getCell(1).getNumericCellValue() + ents;
+			}
+
+			if(currentRow.getCell(7) != null){
+				won = currentRow.getCell(7).getNumericCellValue() + won;
+			}
+		}
+		Row resRow = sheet.createRow(rowNo);
+		Cell cell = resRow.createCell(1);
+		cell.setCellValue((Double) ents);
+		cell = resRow.createCell(7);
+		cell.setCellValue((Double) won);
+
+		try {
+			FileOutputStream outputStream = new FileOutputStream(RESULTS);
+			workbook.write(outputStream);
+			workbook.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test(enabled=true)
 	public void getPlayerStats() {
 		//My Contest, Results
 		homePage.clickMyContests();
@@ -105,7 +181,7 @@ public class GetPlayerStats extends BaseTest {
 		}
 
 		try {
-			FileOutputStream outputStream = new FileOutputStream(FILE_NAME);
+			FileOutputStream outputStream = new FileOutputStream(PLAYER_STATS);
 			workbook.write(outputStream);
 			workbook.close();
 		} catch (FileNotFoundException e) {
@@ -115,7 +191,7 @@ public class GetPlayerStats extends BaseTest {
 		}
 	}
 
-	@Test()
+	@Test(enabled=false)
 	public void getLiveResults() {
 		int winnings = 0;
 		int entry = 0;
@@ -151,34 +227,34 @@ public class GetPlayerStats extends BaseTest {
 			double wins = 0;
 			double ents = 0;
 			double amt = 0;
-			
-            for(int i =1; i <pRows; i++) {
-                Row currentRow = sheet.getRow(i);
-                if(currentRow.getCell(0) != null) {
-                	wins = currentRow.getCell(0).getNumericCellValue() + wins;
-                }
-                if(currentRow.getCell(1) != null){
-                	ents = currentRow.getCell(1).getNumericCellValue() + ents;
-                }
-                
-                if(currentRow.getCell(2) != null){
-                	if(currentRow.getCell(2).getNumericCellValue() == 1.0)
-                	amt = currentRow.getCell(0).getNumericCellValue() + amt;
-                }
-            }
+
+			for(int i =1; i <pRows; i++) {
+				Row currentRow = sheet.getRow(i);
+				if(currentRow.getCell(0) != null) {
+					wins = currentRow.getCell(0).getNumericCellValue() + wins;
+				}
+				if(currentRow.getCell(1) != null){
+					ents = currentRow.getCell(1).getNumericCellValue() + ents;
+				}
+
+				if(currentRow.getCell(3) != null){
+					if(currentRow.getCell(3).getNumericCellValue() == 1.0)
+						amt = currentRow.getCell(0).getNumericCellValue() + amt;
+				}
+			}
 			Row resRow = sheet.createRow(rowNo);
 			Cell cell = resRow.createCell(0);
 			cell.setCellValue((Double) wins);
 			cell = resRow.createCell(1);
 			cell.setCellValue((Double) ents);
-			cell = resRow.createCell(2);
+			cell = resRow.createCell(3);
 			cell.setCellValue((Double) amt);
-			
+
 			homePage.clickArrowBack();
 		}
 
 		try {
-			FileOutputStream outputStream = new FileOutputStream(IN_ACTION);
+			FileOutputStream outputStream = new FileOutputStream(homePage.getDateTime().concat(IN_PROGRESS));
 			workbook.write(outputStream);
 			workbook.close();
 		} catch (FileNotFoundException e) {
@@ -189,7 +265,7 @@ public class GetPlayerStats extends BaseTest {
 
 		homePage.clickArrowBack();
 	}
-	
+
 	private void writeToExcel(String[][] playersInfo, String contestName) {
 		int colNum = 3;
 		Row row = null;
@@ -251,9 +327,9 @@ public class GetPlayerStats extends BaseTest {
 			cell = row.createCell(1);
 			cell.setCellValue((String) "Entry");
 			cell = row.createCell(2);
-			cell.setCellValue((String) "Rank");
-			cell = row.createCell(3);
 			cell.setCellValue((String) "Teams");
+			cell = row.createCell(3);
+			cell.setCellValue((String) "Rank");
 			cell = row.createCell(4);
 			cell.setCellValue((String) "Team Name");
 			cell = row.createCell(5);
@@ -272,11 +348,11 @@ public class GetPlayerStats extends BaseTest {
 			cell = row.createCell(1);
 			cell.setCellValue((Integer) entry);
 			cell = row.createCell(2);
-			cell.setCellValue((Integer) rank);
-			cell = row.createCell(3);
 			cell.setCellValue((Integer) teams);
+			cell = row.createCell(3);
+			cell.setCellValue((Integer) rank);
 		}
-		
+
 		cell = row.createCell(4);
 		teamName = homePage.getTeamName();
 		cell.setCellValue((String) teamName);
@@ -292,6 +368,55 @@ public class GetPlayerStats extends BaseTest {
 			cell.setCellValue((String) playerName.substring(0, 5)+":"+playerPoints);
 			colNum++;
 		}
+
+		rowNo++;
+	}
+
+	private void writeToExcelWon(int tInd, long winnings, int entry, long teams, long rank, String myTeam, String myPoints, String myRank, int myWon) {
+		Row row = null;
+		Cell cell = null;
+		//Player Header
+		if(sheet.getPhysicalNumberOfRows() == 0) {
+			row = sheet.createRow(0);
+			cell = row.createCell(0);
+			cell.setCellValue((String) "Winnings");
+			cell = row.createCell(1);
+			cell.setCellValue((String) "Entry");
+			cell = row.createCell(2);
+			cell.setCellValue((String) "Teams");
+			cell = row.createCell(3);
+			cell.setCellValue((String) "Rank");
+			cell = row.createCell(4);
+			cell.setCellValue((String) "Team Name");
+			cell = row.createCell(5);
+			cell.setCellValue((String) "Team Points");
+			cell = row.createCell(6);
+			cell.setCellValue((String) "Team Rank");
+			cell = row.createCell(7);
+			cell.setCellValue((String) "Amount");
+		}
+
+		//Team name
+		row = sheet.createRow(rowNo);
+		if(tInd == 0) {
+			cell = row.createCell(0);
+			cell.setCellValue((Long) winnings);
+			cell = row.createCell(1);
+			cell.setCellValue((Integer) entry);
+			cell = row.createCell(2);
+			cell.setCellValue((Long) teams);
+			cell = row.createCell(3);
+			cell.setCellValue((Long) rank);
+		}
+
+		cell = row.createCell(4);
+		cell.setCellValue((String) myTeam);
+		cell = row.createCell(5);
+		cell.setCellValue((String) myPoints);
+		cell = row.createCell(6);
+		cell.setCellValue((String) myRank);
+		cell = row.createCell(7);
+		cell.setCellValue((Integer) myWon);
 
 		rowNo++;
 	}

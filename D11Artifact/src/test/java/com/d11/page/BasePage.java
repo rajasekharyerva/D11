@@ -34,6 +34,10 @@ public class BasePage {
 	public String getText(WebElement we) {
 		return we.getText();
 	}
+	
+	public WebDriver getDriver() {
+		return driver;
+	}
 
 	public boolean waitForElementToBeVisible(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(this.driver, Long.parseLong(BaseTest.prop.getProperty("implicitwait")));

@@ -6,10 +6,10 @@
       <class name="com.d11.test.GetPlayerStats">
         <methods>
           <include name="loadPages"/>
+          <include name="getPlayerStats"/>
           <include name="signOut"/>
           <include name="quitDriver"/>
           <include name="signIn"/>
-          <include name="sumEnrtyWinnings"/>
           <include name="readProperties"/>
         </methods>
       </class> <!-- com.d11.test.GetPlayerStats -->
