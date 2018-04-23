@@ -103,3 +103,8 @@ Jason Roy:DEL
 Shreyas Iyer:DEL
 Mayank Markande:MUM
 Ankit Rajpoot:PNJ
+Jofra Archer:RAJ
+Faf du Plessis:CHE
+Ricky Bhui:HYD
+Manan Vohra:BLR
+Harshal Patel:DEL

@@ -42,7 +42,7 @@ public class GetPlayerStats extends BaseTest {
 		homePage = new HomePage(driver);
 	}
 
-	@Test(enabled=false)
+	@Test()
 	public void getAR() {
 		long winnings = 0;
 		int entry =0;
@@ -117,7 +117,7 @@ public class GetPlayerStats extends BaseTest {
 		}
 	}
 
-	@Test(enabled=true)
+	@Test()
 	public void getPlayerStats() {
 		//My Contest, Results
 		homePage.clickMyContests();
@@ -191,7 +191,7 @@ public class GetPlayerStats extends BaseTest {
 		}
 	}
 
-	@Test(enabled=false)
+	@Test()
 	public void getLiveResults() {
 		int winnings = 0;
 		int entry = 0;
@@ -339,6 +339,9 @@ public class GetPlayerStats extends BaseTest {
 				cell.setCellValue((String) "Player" + i);
 			}
 		}
+		
+		String captain = homePage.getCaptainName();
+		String vCaptain = homePage.getViceCaptainName();
 
 		//Team name
 		row = sheet.createRow(rowNo);
@@ -365,7 +368,14 @@ public class GetPlayerStats extends BaseTest {
 			cell = row.createCell(colNum);
 			playerName = homePage.getPlayerName(plInd);
 			playerPoints = homePage.getPlayerPoints(plInd);
+			playerPoints = playerPoints.substring(0, (playerPoints.length() - 3));
+			if(captain.equals(playerName)) {
+				cell.setCellValue((String) "C-".concat(playerName.substring(0, 5)+":"+playerPoints));
+			} else if(vCaptain.equals(playerName)) {
+				cell.setCellValue((String) "VC-".concat(playerName.substring(0, 5)+":"+playerPoints));
+			} else {
 			cell.setCellValue((String) playerName.substring(0, 5)+":"+playerPoints);
+			}
 			colNum++;
 		}
 

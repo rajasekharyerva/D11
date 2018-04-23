@@ -3,7 +3,13 @@
 <suite name="Suite" parallel="classes" thread-count="1" configfailurepolicy="continue">
     <test name="Web">
         <classes>
-            <class name="com.d11.test.GetPlayerStats"/>
+            <class name="com.d11.test.GetPlayerStats">
+            <methods>
+            <!-- <include name="getPlayerStats"></include>
+            <include name="getAR"></include> -->
+            <include name="getLiveResults"></include>
+            </methods>
+            </class>
         </classes>
     </test>
 </suite>

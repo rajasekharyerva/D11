@@ -55,6 +55,12 @@ public class HomePage extends BasePage{
 
 	@FindBy(xpath="//div[@class='toolbar-title']")
 	WebElement teamName;
+	
+	@FindBy(xpath="//img[@src='https://assets.dream11.com/public/imgs/playerRoleArtwork/Captain_Default.svg']/ancestor::div[2]/following-sibling::div[1]")
+	WebElement captain;
+	
+	@FindBy(xpath="//img[@src='https://assets.dream11.com/public/imgs/playerRoleArtwork/ViceCaptain_Default.svg']/ancestor::div[2]/following-sibling::div[1]")
+	WebElement vCaptain;
 
 	@FindBy(xpath="//div[text()='ENTRY']/following-sibling::div/span/span[2]")
 	List<WebElement> entry;
@@ -137,6 +143,14 @@ public class HomePage extends BasePage{
 
 	public String getMyTeamName(int index) {
 		return myTeams.get(index).getText();
+	}
+	
+	public String getCaptainName() {
+		return captain.getText();
+	}
+	
+	public String getViceCaptainName() {
+		return vCaptain.getText();
 	}
 
 	public int getMyTeamsCount() {
