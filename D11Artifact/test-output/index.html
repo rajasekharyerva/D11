@@ -102,7 +102,7 @@
                     <div class="method-list-content passed suite-Suite">
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-Suite" title="com.d11.test.GetPlayerStats" hash-for-method="getLiveResults">getLiveResults</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-Suite" title="com.d11.test.GetPlayerStats" hash-for-method="getPlayersAllStats">getPlayersAllStats</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Suite -->
@@ -125,9 +125,9 @@
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="getLiveResults">
-                  </a> <!-- getLiveResults -->
-                  <span class="method-name">getLiveResults</span>
+                  <a name="getPlayersAllStats">
+                  </a> <!-- getPlayersAllStats -->
+                  <span class="method-name">getPlayersAllStats</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -146,7 +146,7 @@
     &lt;classes&gt;
       &lt;class name=&quot;com.d11.test.GetPlayerStats&quot;&gt;
         &lt;methods&gt;
-          &lt;include name=&quot;getLiveResults&quot;/&gt;
+          &lt;include name=&quot;getPlayersAllStats&quot;/&gt;
         &lt;/methods&gt;
       &lt;/class&gt; &lt;!-- com.d11.test.GetPlayerStats --&gt;
     &lt;/classes&gt;
@@ -190,14 +190,14 @@ data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'getLiveResults')
+data.setCell(0, 1, 'getPlayersAllStats')
 data.setCell(0, 2, 'com.d11.test.GetPlayerStats')
-data.setCell(0, 3, 149623);
+data.setCell(0, 3, 273204);
 window.suiteTableData['Suite']= { tableData: data, tableDiv: 'times-div-Suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 2 minutes</span>
+              <span class="suite-total-time">Total running time: 4 minutes</span>
               <div id="times-div-Suite">
               </div> <!-- times-div-Suite -->
             </div> <!-- times-div -->
@@ -212,7 +212,7 @@ return data;
         </div> <!-- panel -->
         <div panel-name="ignored-methods-Suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">2 ignored methods</span>
+            <span class="header-content">3 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="ignored-class-div">
@@ -220,7 +220,9 @@ return data;
               <div class="ignored-methods-div">
                 <span class="ignored-method-name">getAR</span>
                 <br/>
-                <span class="ignored-method-name">getPlayerStats</span>
+                <span class="ignored-method-name">getPlayersJoinedStats</span>
+                <br/>
+                <span class="ignored-method-name">getLiveResults</span>
                 <br/>
               </div> <!-- ignored-methods-div -->
             </div> <!-- ignored-class-div -->
@@ -239,25 +241,23 @@ return data;
               </div> <!-- configuration-class before -->
               <div class="configuration-class before">
                 <span class="method-name">loadPages</span>
-                <span class="method-start">6382 ms</span>
+                <span class="method-start">8194 ms</span>
               </div> <!-- configuration-class before -->
               <div class="configuration-method before">
                 <span class="method-name">signIn</span>
-                <span class="method-start">6725 ms</span>
+                <span class="method-start">8406 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
-                <span class="method-name">getLiveResults</span>
-                <span class="method-start">21936 ms</span>
+                <span class="method-name">getPlayersAllStats</span>
+                <span class="method-start">8948 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
-                <img src="failed.png">
-                </img>
                 <span class="method-name">signOut</span>
-                <span class="method-start">171565 ms</span>
+                <span class="method-start">282162 ms</span>
               </div> <!-- configuration-method after -->
               <div class="configuration-class after">
                 <span class="method-name">quitDriver</span>
-                <span class="method-start">185064 ms</span>
+                <span class="method-start">286143 ms</span>
               </div> <!-- configuration-class after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

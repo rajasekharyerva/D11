@@ -47,17 +47,20 @@ public class BaseTest {
 
 	@BeforeMethod
 	public void signIn() {
-		loginPage.clickSignIn();
-		loginPage.clickSignIn();
-		loginPage.setEmail(prop.getProperty("email"));
-		loginPage.setPassword(prop.getProperty("password"));
-		loginPage.clickLogin();
+		
+		if(!"https://www.iplt20.com/stats/2018".equals(driver.getCurrentUrl())) {
+			loginPage.clickSignIn();
+			loginPage.clickSignIn();
+			loginPage.setEmail(prop.getProperty("email"));
+			loginPage.setPassword(prop.getProperty("password"));
+			loginPage.clickLogin();
+		}
 	}
 
 	@AfterMethod
 	public void signOut() {
 		homePage.clickMore();
-		homePage.clickLogout();
+		//homePage.clickLogout();
 	}
 
 	@AfterClass

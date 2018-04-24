@@ -1,105 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="2" total="3" passed="1">
+<testng-results skipped="0" failed="0" ignored="3" total="4" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Suite" duration-ms="185212" started-at="2018-04-23T15:24:49Z" finished-at="2018-04-23T15:27:54Z">
+  <suite name="Suite" duration-ms="286274" started-at="2018-04-24T23:03:58Z" finished-at="2018-04-24T23:08:44Z">
     <groups>
     </groups>
-    <test name="Web" duration-ms="185212" started-at="2018-04-23T15:24:49Z" finished-at="2018-04-23T15:27:54Z">
+    <test name="Web" duration-ms="286274" started-at="2018-04-24T23:03:58Z" finished-at="2018-04-24T23:08:44Z">
       <class name="com.d11.test.GetPlayerStats">
-        <test-method status="PASS" signature="readProperties()[pri:0, instance:com.d11.test.GetPlayerStats@1ea9f6af]" name="readProperties" is-config="true" duration-ms="6382" started-at="2018-04-23T15:24:49Z" finished-at="2018-04-23T15:24:55Z">
+        <test-method status="PASS" signature="readProperties()[pri:0, instance:com.d11.test.GetPlayerStats@3967e60c]" name="readProperties" is-config="true" duration-ms="8193" started-at="2018-04-24T23:03:58Z" finished-at="2018-04-24T23:04:06Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- readProperties -->
-        <test-method status="PASS" signature="loadPages()[pri:0, instance:com.d11.test.GetPlayerStats@1ea9f6af]" name="loadPages" is-config="true" duration-ms="316" started-at="2018-04-23T15:24:55Z" finished-at="2018-04-23T15:24:56Z">
+        <test-method status="PASS" signature="loadPages()[pri:0, instance:com.d11.test.GetPlayerStats@3967e60c]" name="loadPages" is-config="true" duration-ms="174" started-at="2018-04-24T23:04:06Z" finished-at="2018-04-24T23:04:07Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- loadPages -->
-        <test-method status="PASS" signature="signIn()[pri:0, instance:com.d11.test.GetPlayerStats@1ea9f6af]" name="signIn" is-config="true" duration-ms="15211" started-at="2018-04-23T15:24:56Z" finished-at="2018-04-23T15:25:11Z">
+        <test-method status="PASS" signature="signIn()[pri:0, instance:com.d11.test.GetPlayerStats@3967e60c]" name="signIn" is-config="true" duration-ms="542" started-at="2018-04-24T23:04:07Z" finished-at="2018-04-24T23:04:07Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- signIn -->
-        <test-method status="PASS" signature="getLiveResults()[pri:0, instance:com.d11.test.GetPlayerStats@1ea9f6af]" name="getLiveResults" duration-ms="149623" started-at="2018-04-23T15:25:11Z" finished-at="2018-04-23T15:27:40Z">
+        <test-method status="PASS" signature="getPlayersAllStats()[pri:0, instance:com.d11.test.GetPlayerStats@3967e60c]" name="getPlayersAllStats" duration-ms="273204" started-at="2018-04-24T23:04:07Z" finished-at="2018-04-24T23:08:40Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- getLiveResults -->
-        <test-method status="FAIL" signature="signOut()[pri:0, instance:com.d11.test.GetPlayerStats@1ea9f6af]" name="signOut" is-config="true" duration-ms="13486" started-at="2018-04-23T15:27:40Z" finished-at="2018-04-23T15:27:54Z">
-          <exception class="org.openqa.selenium.NoSuchElementException">
-            <message>
-              <![CDATA[no such element: Unable to locate element: {"method":"xpath","selector":"//div[text()='Log Out']"}
-  (Session info: chrome=65.0.3325.181)
-  (Driver info: chromedriver=2.35.528139 (47ead77cb35ad2a9a83248b292151462a66cd881),platform=Linux 4.4.0-116-generic x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 0 milliseconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
-System info: host: 'Unknown', ip: 'Unknown', os.name: 'Linux', os.arch: 'amd64', os.version: '4.4.0-116-generic', java.version: '1.8.0_151'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528139 (47ead77cb35ad2..., userDataDir: /tmp/.org.chromium.Chromium...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 65.0.3325.181, webStorageEnabled: true}
-Session ID: 999a15f4ecfeecfdd2bfbaa5686f20c4
-*** Element info: {Using=xpath, value=//div[text()='Log Out']}]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//div[text()='Log Out']"}
-  (Session info: chrome=65.0.3325.181)
-  (Driver info: chromedriver=2.35.528139 (47ead77cb35ad2a9a83248b292151462a66cd881),platform=Linux 4.4.0-116-generic x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 0 milliseconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: '3.11.0', revision: 'e59cfb3', time: '2018-03-11T20:26:55.152Z'
-System info: host: 'Unknown', ip: 'Unknown', os.name: 'Linux', os.arch: 'amd64', os.version: '4.4.0-116-generic', java.version: '1.8.0_151'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, acceptSslCerts: false, applicationCacheEnabled: false, browserConnectionEnabled: false, browserName: chrome, chrome: {chromedriverVersion: 2.35.528139 (47ead77cb35ad2..., userDataDir: /tmp/.org.chromium.Chromium...}, cssSelectorsEnabled: true, databaseEnabled: false, handlesAlerts: true, hasTouchScreen: false, javascriptEnabled: true, locationContextEnabled: true, mobileEmulationEnabled: false, nativeEvents: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: LINUX, platformName: LINUX, rotatable: false, setWindowRect: true, takesHeapSnapshot: true, takesScreenshot: true, unexpectedAlertBehaviour: , unhandledPromptBehavior: , version: 65.0.3325.181, webStorageEnabled: true}
-Session ID: 999a15f4ecfeecfdd2bfbaa5686f20c4
-*** Element info: {Using=xpath, value=//div[text()='Log Out']}
-at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
-at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:214)
-at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:166)
-at org.openqa.selenium.remote.http.JsonHttpResponseCodec.reconstructValue(JsonHttpResponseCodec.java:40)
-at org.openqa.selenium.remote.http.AbstractHttpResponseCodec.decode(AbstractHttpResponseCodec.java:80)
-at org.openqa.selenium.remote.http.AbstractHttpResponseCodec.decode(AbstractHttpResponseCodec.java:44)
-at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
-at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
-at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:545)
-at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:319)
-at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:421)
-at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
-at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:311)
-at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
-at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
-at com.sun.proxy.$Proxy11.getCoordinates(Unknown Source)
-at org.openqa.selenium.interactions.internal.MouseAction.getActionLocation(MouseAction.java:65)
-at org.openqa.selenium.interactions.MoveMouseAction.perform(MoveMouseAction.java:43)
-at org.openqa.selenium.interactions.CompositeAction.perform(CompositeAction.java:36)
-at org.openqa.selenium.interactions.Actions$BuiltAction.perform(Actions.java:641)
-at org.openqa.selenium.interactions.Actions.perform(Actions.java:594)
-at com.d11.page.BasePage.click(BasePage.java:20)
-at com.d11.page.HomePage.clickLogout(HomePage.java:217)
-at com.d11.test.BaseTest.signOut(BaseTest.java:60)
-at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-at java.lang.reflect.Method.invoke(Method.java:498)
-at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
-at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
-at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
-at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
-at org.testng.internal.Invoker.invokeMethod(Invoker.java:646)
-at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
-at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
-at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
-at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-at java.lang.Thread.run(Thread.java:748)
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.NoSuchElementException -->
+        </test-method> <!-- getPlayersAllStats -->
+        <test-method status="PASS" signature="signOut()[pri:0, instance:com.d11.test.GetPlayerStats@3967e60c]" name="signOut" is-config="true" duration-ms="3981" started-at="2018-04-24T23:08:40Z" finished-at="2018-04-24T23:08:44Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- signOut -->
-        <test-method status="PASS" signature="quitDriver()[pri:0, instance:com.d11.test.GetPlayerStats@1ea9f6af]" name="quitDriver" is-config="true" duration-ms="113" started-at="2018-04-23T15:27:54Z" finished-at="2018-04-23T15:27:54Z">
+        <test-method status="PASS" signature="quitDriver()[pri:0, instance:com.d11.test.GetPlayerStats@3967e60c]" name="quitDriver" is-config="true" duration-ms="116" started-at="2018-04-24T23:08:44Z" finished-at="2018-04-24T23:08:44Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- quitDriver -->

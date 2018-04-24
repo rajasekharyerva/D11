@@ -86,14 +86,23 @@ public class HomePage extends BasePage{
 	@FindBy(xpath="//i[text()='arrow_back']")
 	WebElement arrowBack;
 
+	@FindBy(xpath="(//a[text()='Most Runs'])[2]")
+	WebElement mostRuns;
+	
+	@FindBy(xpath="//a[text()='Most Wickets']")
+	WebElement mostWickets;
+	
 	@FindBy(xpath="//a[text()='Score']")
 	WebElement score;
 
 	@FindBy(xpath="//table/tbody/tr")
 	List<WebElement> rows;
 
-	@FindBy(xpath="//table/thead/td")
+	@FindBy(xpath="//table/thead/td | //table/tbody/tr/th")
 	List<WebElement> headers;
+	
+	@FindBy(xpath="//tbody/tr/td//span[contains(@class,'table__logo tLogo')]")
+	List<WebElement> logos;
 
 	@FindBy(xpath="//div[text()='More']")
 	WebElement more;
@@ -109,9 +118,18 @@ public class HomePage extends BasePage{
 		PageFactory.initElements(driver, this);
 	}
 
+	public void clickMostRuns() {
+		this.click(mostRuns);
+	}
+	
+	public void clickMostWickets() {
+		this.click(mostWickets);
+	}
+
 	public void clickMyContests() {
 		this.click(myContests);
 	}
+
 
 	public void clickClose() {
 		this.click(close);
@@ -289,5 +307,20 @@ public class HomePage extends BasePage{
 
 	public int getRowsSize() {
 		return this.rows.size();
+	}
+	
+	public String[] getRowText(int index) {
+		 List<WebElement> colEls = this.rows.get(index).findElements(By.xpath(".//td"));
+		 String[] colElements = new String[colEls.size()];
+		 index = 0 ;
+		 for(WebElement el : colEls) {
+			 colElements[index] = el.getText();
+			 index++;
+		 }
+		 return colElements;
+	}
+	
+	public String getLogoText(int index) {
+		return this.logos.get(index).getAttribute("class").split(" ")[2];
 	}
 }

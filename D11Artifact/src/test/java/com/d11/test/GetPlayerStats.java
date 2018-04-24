@@ -22,9 +22,10 @@ import com.d11.page.LoginPage;
 public class GetPlayerStats extends BaseTest {
 
 	XSSFWorkbook workbook = new XSSFWorkbook();
-	XSSFSheet sheet = workbook.createSheet("Stats");
-	String PLAYER_STATS = "PlayerStats.xlsx";
-	String RESULTS = "Results.xlsx";
+	XSSFSheet sheet = null;
+	String JOINED_STATS = "JoinedStats.xlsx";
+	String ALL_STATS = "AllStats.xlsx";
+	String RESULTS = "JoinedResults.xlsx";
 	String IN_PROGRESS = "InProgress.xlsx";
 	String READ_FILE = "PlayerTeams.txt";
 	String WRITE_FILE = "PlayerTeamsUpdated.txt";
@@ -41,9 +42,83 @@ public class GetPlayerStats extends BaseTest {
 		loginPage = new LoginPage(driver);
 		homePage = new HomePage(driver);
 	}
+	
+	@Test()
+	public void getPlayersAllStats() {
+		sheet = workbook.createSheet("MostRuns");
+		Row row = null;
+		Cell cell =null;
+		homePage.clickMostRuns();
+
+		for(int index = 1; index < homePage.getRowsSize(); index++){
+			if(index == 1) {
+				row = sheet.createRow(0);
+				cell = row.createCell(0);
+				cell.setCellValue((String) "Team");
+				
+				String[] headers = homePage.getHeaders();
+				for(int hIndex = 0; hIndex < headers.length; hIndex++) {
+				cell = row.createCell(hIndex + 1);
+				cell.setCellValue((String) headers[hIndex]);
+				}
+			}
+			String[] rowText =	homePage.getRowText(index);
+			for(int rInd = 0; rInd < rowText.length; rInd++) {
+				row = sheet.createRow(index);
+				cell = row.createCell(0);
+				cell.setCellValue((String) homePage.getLogoText(index - 1));
+				//Team
+				for(int rIndex = 0; rIndex < rowText.length; rIndex++) {
+					cell = row.createCell(rIndex +1);
+					cell.setCellValue((String) rowText[rIndex]);
+				}
+			}
+			System.out.println(index + "completed");
+		}
+		
+		homePage.clickMostWickets();
+		sheet = workbook.createSheet("MostWickets");
+		
+		for(int index = 1; index < homePage.getRowsSize(); index++){
+			if(index == 1) {
+				row = sheet.createRow(0);
+				cell = row.createCell(0);
+				cell.setCellValue((String) "Team");
+				
+				String[] headers = homePage.getHeaders();
+				for(int hIndex = 0; hIndex < headers.length; hIndex++) {
+				cell = row.createCell(hIndex + 1);
+				cell.setCellValue((String) headers[hIndex]);
+				}
+			}
+			String[] rowText =	homePage.getRowText(index);
+			for(int rInd = 0; rInd < rowText.length; rInd++) {
+				row = sheet.createRow(index);
+				cell = row.createCell(0);
+				cell.setCellValue((String) homePage.getLogoText(index - 1));
+				//Team
+				for(int rIndex = 0; rIndex < rowText.length; rIndex++) {
+					cell = row.createCell(rIndex +1);
+					cell.setCellValue((String) rowText[rIndex]);
+				}
+			}
+			System.out.println(index + "completed");
+		}
+
+		try {
+			FileOutputStream outputStream = new FileOutputStream(ALL_STATS);
+			workbook.write(outputStream);
+			workbook.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Test()
 	public void getAR() {
+		sheet = workbook.createSheet("LostWon");
 		long winnings = 0;
 		int entry =0;
 		long rank =0;
@@ -118,7 +193,8 @@ public class GetPlayerStats extends BaseTest {
 	}
 
 	@Test()
-	public void getPlayerStats() {
+	public void getPlayersJoinedStats() {
+		sheet = workbook.createSheet("JoinedStats");
 		//My Contest, Results
 		homePage.clickMyContests();
 		homePage.clickResults();
@@ -181,7 +257,7 @@ public class GetPlayerStats extends BaseTest {
 		}
 
 		try {
-			FileOutputStream outputStream = new FileOutputStream(PLAYER_STATS);
+			FileOutputStream outputStream = new FileOutputStream(JOINED_STATS);
 			workbook.write(outputStream);
 			workbook.close();
 		} catch (FileNotFoundException e) {
@@ -193,6 +269,7 @@ public class GetPlayerStats extends BaseTest {
 
 	@Test()
 	public void getLiveResults() {
+		sheet = workbook.createSheet("InProgres");
 		int winnings = 0;
 		int entry = 0;
 		int rank = 0;
