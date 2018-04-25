@@ -5,10 +5,11 @@
         <classes>
             <class name="com.d11.test.GetPlayerStats">
             <methods>
-            <include name="getPlayersAllStats"></include>
-          <!--   <include name="getPlayersJoinedStats"></include> -->
-            <!-- <include name="getAR"></include> -->
-            <!-- <include name="getLiveResults"></include> -->
+            <include name="getMatchesStats"></include>
+          <!--   <include name="getMostStats"></include> -->
+            <!-- <include name="getMoneyStats"></include> -->
+             <!-- <include name="getJoinedStats"></include> -->
+           <!--  <include name="getLiveStats"></include> -->
             </methods>
             </class>
         </classes>

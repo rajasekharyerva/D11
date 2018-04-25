@@ -5,7 +5,7 @@
     <classes>
       <class name="com.d11.test.GetPlayerStats">
         <methods>
-          <include name="getPlayersAllStats"/>
+          <include name="getMatchesStats"/>
           <include name="loadPages"/>
           <include name="signOut"/>
           <include name="quitDriver"/>

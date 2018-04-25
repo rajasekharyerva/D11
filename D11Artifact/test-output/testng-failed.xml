@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
-  <test thread-count="5" name="Default test(failed)">
+<suite thread-count="1" configfailurepolicy="continue" guice-stage="DEVELOPMENT" name="Failed suite [Suite]" parallel="classes">
+  <test thread-count="1" name="Web(failed)" parallel="classes">
     <classes>
       <class name="com.d11.test.GetPlayerStats">
         <methods>
-          <include name="getAR"/>
-          <include name="getPlayersAllStats"/>
+          <include name="getMatchesStats"/>
           <include name="loadPages"/>
           <include name="signOut"/>
           <include name="quitDriver"/>
           <include name="signIn"/>
-          <include name="getPlayersJoinedStats"/>
-          <include name="getLiveResults"/>
           <include name="readProperties"/>
         </methods>
       </class> <!-- com.d11.test.GetPlayerStats -->
     </classes>
-  </test> <!-- Default test(failed) -->
-</suite> <!-- Failed suite [Default suite] -->
+  </test> <!-- Web(failed) -->
+</suite> <!-- Failed suite [Suite] -->

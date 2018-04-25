@@ -3,18 +3,17 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends BasePage{
 	@FindBy(xpath="//div[text()='My Contests']")
 	WebElement myContests;
 
-	@FindBy(xpath="//div[text()='Results']")
+	@FindBy(xpath="//div[text()='Results'] | (//a[contains(text(),'Results')])[1]")
 	WebElement results;
 
 	@FindBy(xpath="//div[text()='Live']")
@@ -55,10 +54,10 @@ public class HomePage extends BasePage{
 
 	@FindBy(xpath="//div[@class='toolbar-title']")
 	WebElement teamName;
-	
+
 	@FindBy(xpath="//img[@src='https://assets.dream11.com/public/imgs/playerRoleArtwork/Captain_Default.svg']/ancestor::div[2]/following-sibling::div[1]")
 	WebElement captain;
-	
+
 	@FindBy(xpath="//img[@src='https://assets.dream11.com/public/imgs/playerRoleArtwork/ViceCaptain_Default.svg']/ancestor::div[2]/following-sibling::div[1]")
 	WebElement vCaptain;
 
@@ -88,19 +87,43 @@ public class HomePage extends BasePage{
 
 	@FindBy(xpath="(//a[text()='Most Runs'])[2]")
 	WebElement mostRuns;
-	
-	@FindBy(xpath="//a[text()='Most Wickets']")
+
+	@FindBy(xpath="(//a[text()='Most Wickets'])[2]")
 	WebElement mostWickets;
-	
+
 	@FindBy(xpath="//a[text()='Score']")
 	WebElement score;
 
 	@FindBy(xpath="//table/tbody/tr")
 	List<WebElement> rows;
 
+	@FindBy(xpath="//tr[contains(@class,'batsmanInns player-popup-link')]")
+	List<WebElement> batsmenRows;
+	
+	@FindBy(xpath="//tr[@class='player-popup-link']")
+	List<WebElement> bowlerRows;
+	
+	@FindBy(xpath="(//table[@class='batsmen'])[1]/thead/tr/th")
+	List<WebElement> batsmenHeaders;
+	
+	@FindBy(xpath="(//table[@class='bowlers'])[1]/thead/tr/th")
+	List<WebElement> bowlerHeaders;
+
 	@FindBy(xpath="//table/thead/td | //table/tbody/tr/th")
 	List<WebElement> headers;
-	
+
+	@FindBy(xpath="//div[contains(@class,'js-match match-list__item result')]")
+	List<WebElement> matchResults;
+
+	@FindBy(xpath="//div[contains(@class,'result__team result__team--loser')]/p")
+	List<WebElement> loser;
+
+	@FindBy(xpath="//div[@class='result__team ']/p")
+	List<WebElement> winner;
+
+	@FindBy(xpath="//div[@class='result__links']/a[text()='Match Centre']")
+	List<WebElement> matchCentre;
+
 	@FindBy(xpath="//tbody/tr/td//span[contains(@class,'table__logo tLogo')]")
 	List<WebElement> logos;
 
@@ -121,7 +144,7 @@ public class HomePage extends BasePage{
 	public void clickMostRuns() {
 		this.click(mostRuns);
 	}
-	
+
 	public void clickMostWickets() {
 		this.click(mostWickets);
 	}
@@ -162,11 +185,11 @@ public class HomePage extends BasePage{
 	public String getMyTeamName(int index) {
 		return myTeams.get(index).getText();
 	}
-	
+
 	public String getCaptainName() {
 		return captain.getText();
 	}
-	
+
 	public String getViceCaptainName() {
 		return vCaptain.getText();
 	}
@@ -266,28 +289,14 @@ public class HomePage extends BasePage{
 
 	public String[][] getPlayersInfo() {
 		String[][] tableData = new String[22][15];
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		int players = getRowsSize();
 		System.out.println("Reading Players..." + getDateTime());
-		int rowInd = 0;
 		for(int rowIndex = 0; rowIndex< players; rowIndex++) {
 			List<WebElement> playerCols = getDriver().findElements(By.xpath("//table/tbody/tr["+(rowIndex+1)+"]/td"));
 			for(int colIndex = 0; colIndex < playerCols.size(); colIndex++) {
 				tableData[rowIndex][colIndex] = playerCols.get(colIndex).getText();
 			}
 		}
-
-		/*for(WebElement rEl : rows) {
-			System.out.println("Reading Player "+ (rowInd + 1) + ": " + dateFormat.format(new Date()));
-			List<WebElement> cols = rEl.findElements(By.xpath("./td"));
-			int colInd = 0;
-			for(WebElement cEl : cols) {
-				tableData[rowInd][colInd] = cEl.getText();
-				colInd++;
-			}
-			System.out.println("Reading Player "+ (rowInd + 1) + " completed: " + dateFormat.format(new Date()));
-			rowInd++;
-		}*/
 		System.out.println("Reading Players completed..." + getDateTime());
 		return tableData;
 	}
@@ -297,8 +306,24 @@ public class HomePage extends BasePage{
 		return dateFormat.format(new Date());
 	}
 
+	public String[] getBatsmenHeaders() {
+		String[] headers = new String[this.batsmenHeaders.size()];
+		for(int hIndex = 0; hIndex < headers.length; hIndex++) {
+			headers[hIndex] = this.batsmenHeaders.get(hIndex).getText() == null ? "" : this.batsmenHeaders.get(hIndex).getText();
+		}
+		return headers;
+	}
+	
+	public String[] getBowlersHeaders() {
+		String[] headers = new String[this.bowlerHeaders.size()];
+		for(int hIndex = 0; hIndex < headers.length; hIndex++) {
+			headers[hIndex] = this.bowlerHeaders.get(hIndex).getText();
+		}
+		return headers;
+	}
+	
 	public String[] getHeaders() {
-		String[] headers = new String[15];
+		String[] headers = new String[this.headers.size()];
 		for(int hIndex = 0; hIndex < headers.length; hIndex++) {
 			headers[hIndex] = this.headers.get(hIndex).getText();
 		}
@@ -309,17 +334,99 @@ public class HomePage extends BasePage{
 		return this.rows.size();
 	}
 	
-	public String[] getRowText(int index) {
-		 List<WebElement> colEls = this.rows.get(index).findElements(By.xpath(".//td"));
-		 String[] colElements = new String[colEls.size()];
-		 index = 0 ;
-		 for(WebElement el : colEls) {
-			 colElements[index] = el.getText();
-			 index++;
-		 }
-		 return colElements;
+	public int getBatsmenCount() {
+		return this.batsmenRows.size();
 	}
 	
+	public int getBowlerCount() {
+		return this.bowlerRows.size();
+	}
+
+	public int getMatchResultsSize() {
+		return this.matchResults.size();
+	}
+
+	public String getMatchWinner(int index) {
+		return this.winner.get(index).getText();
+	}
+
+	public String getMatchLoser(int index) {
+		return this.loser.get(index).getText();
+	}
+
+	public void clickMatchCentre(int index) {
+		try {
+			matchCentre.get(index).click();
+		} catch (WebDriverException e) {
+			windowScrollDown();
+			matchCentre.get(index).click();
+		}
+
+	}
+
+	public String[] getRowText(int index) {
+		List<WebElement> colEls = this.rows.get(index).findElements(By.xpath(".//td"));
+		String[] colElements = new String[colEls.size()];
+		index = 0 ;
+		for(WebElement el : colEls) {
+			colElements[index] = el.getText();
+			index++;
+		}
+		return colElements;
+	}
+
+	public String[] getBatsmenDataFromMatchResults(int index) {
+		List<WebElement> colEls = null;
+		String[] colArr = null;
+		boolean retry = true;
+		
+		while(retry) {
+			try {
+				colEls = batsmenRows.get(index).findElements(By.xpath(".//td"));
+				
+				if(colEls.size() != 0 & colEls.size() == 8) {
+					colArr = new String[colEls.size() - 1];
+					for(int cIndex = 1; cIndex < colEls.size(); cIndex++) {
+						colArr[cIndex - 1] = colEls.get(cIndex).getText();
+				}
+			}
+			retry = false;
+			}catch(StaleElementReferenceException e) {
+				retry = true;
+				System.out.println("StaleElementReferenceException occured retrying...");
+				getDriver().navigate().refresh();
+				waitFor(5);
+			}
+		}
+		return colArr;
+	}
+	
+	public String[] getBowlerDataFromMatchResults(int index) {
+		List<WebElement> colEls = null;
+		String[] colArr = null;
+		boolean retry = true;
+		
+		while(retry) {
+			try {
+				colEls = bowlerRows.get(index).findElements(By.xpath(".//td"));
+				
+				if(colEls.size() != 0 & colEls.size() == 7) {
+					colArr = new String[colEls.size() - 1];
+					for(int cIndex = 1; cIndex < colEls.size(); cIndex++) {
+						colArr[cIndex - 1] = colEls.get(cIndex).getText();
+				}
+			}
+			retry = false;
+			}catch(StaleElementReferenceException e) {
+				retry = true;
+				System.out.println("StaleElementReferenceException occured retrying...");
+				getDriver().navigate().refresh();
+				waitFor(5);
+			}
+		}
+		return colArr;
+	}
+
 	public String getLogoText(int index) {
 		return this.logos.get(index).getAttribute("class").split(" ")[2];
 	}

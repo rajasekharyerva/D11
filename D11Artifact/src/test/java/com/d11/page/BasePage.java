@@ -1,4 +1,5 @@
 package com.d11.page;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -20,6 +21,11 @@ public class BasePage {
 		action.moveToElement(we).perform();
 		action.click(we).build().perform();
 		waitFor(3);
+	}
+	
+	public void windowScrollDown() {
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		jse.executeScript("window.scrollBy(0,200)", "");
 	}
 
 	public void sendKeys(WebElement we, String input) {
