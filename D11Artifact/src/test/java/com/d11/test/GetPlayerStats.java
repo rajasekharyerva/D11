@@ -23,8 +23,6 @@ public class GetPlayerStats extends BaseTest {
 
 	XSSFWorkbook workbook = new XSSFWorkbook();
 	XSSFSheet sheet, batting, bowling = null;
-	//XSSFSheet sheet = null;
-	//XSSFSheet sheet = null;
 	String JOINED_STATS = "JoinedStats.xlsx";
 	String MOST_STATS = "MostStats.xlsx";
 	String MATCHES_STATS = "MatchesStats.xlsx";
@@ -41,37 +39,26 @@ public class GetPlayerStats extends BaseTest {
 	int rowNo = 1;
 	Map<String, String> playerTeamMap = new HashMap<String, String>();
 
-	@BeforeClass
-	public void loadPages() {
-		loginPage = new LoginPage(driver);
-		homePage = new HomePage(driver);
-	}
-
 	@Test()
-	public void getMatchesStats() {
+	public void getIPLMatchesStats() {
 		batting = workbook.createSheet("Batting");
 		bowling = workbook.createSheet("Bowling");
 		Row row = null;
 		Cell cell =null;
 		homePage.clickResults();
-		
-		
-		
-		for(int mIndex = 0; mIndex <1; mIndex++) {
-		//for(int mIndex = 0; mIndex < 1; mIndex++) {
-
-			String winner = homePage.getMatchWinner(mIndex);
-			String loser = homePage.getMatchLoser(mIndex);
+		homePage.waitFor(2);
+		int mDec = 23;
+		for(int mIndex = 0; mIndex <24; mIndex++) {
+			String winner = homePage.getMatchWinner(mDec);
+			String loser = homePage.getMatchLoser(mDec);
 			String vs = winner.concat(" VS ".concat(loser));
 
-			//homePage.waitFor(2);
-			//homePage.clickMatchCentre(mIndex);
 			if(mIndex < 10)
-			driver.get("https://www.iplt20.com/match/2018/0"+(mIndex + 1)+"?tab=scorecard");
+				driver.get("https://www.iplt20.com/match/2018/0"+(mIndex + 1)+"?tab=scorecard");
 			else
-			driver.get("https://www.iplt20.com/match/2018/"+(mIndex + 1)+"?tab=scorecard");
+				driver.get("https://www.iplt20.com/match/2018/"+(mIndex + 1)+"?tab=scorecard");
 			homePage.waitFor(5);	
-			
+
 			//Batsmen
 			if(mIndex == 0) {
 				row = batting.createRow(0);
@@ -81,38 +68,39 @@ public class GetPlayerStats extends BaseTest {
 				cell.setCellValue((String) "Winner");
 				cell = row.createCell(2);
 				cell.setCellValue((String) "Loser");
+				cell = row.createCell(3);
+				cell.setCellValue((String) "Match");
 
 				String[] headers = homePage.getBatsmenHeaders();
 				for(int hIndex = 0; hIndex < headers.length; hIndex++) {
-					cell = row.createCell(hIndex + 3);
+					cell = row.createCell(hIndex + 4);
 					cell.setCellValue((String) headers[hIndex] == null ? "" : headers[hIndex]);
 				}
 			}
-			
-			int batsmenCount = homePage.getBatsmenCount();
-			
-			for(int index = 0; index< batsmenCount; index++){
 
-				String[] rowText =	homePage.getBatsmenDataFromMatchResults(index);
+			int batsmenCount = homePage.getBatsmenCount();
+
+			for(int index = 0; index< batsmenCount; index++){
 				row = batting.createRow(rowNum);
-				for(int cInd = 0; cInd < rowText.length; cInd++) {
-					if(index == 0) {
+				if(index == 0) {
 					cell = row.createCell(0);
 					cell.setCellValue((String) vs);
 					cell = row.createCell(1);
 					cell.setCellValue((String) winner);
 					cell = row.createCell(2);
 					cell.setCellValue((String) loser);
-					}
-					
-					cell = row.createCell(3 + cInd);
-					cell.setCellValue((String) rowText[cInd]);
-					
 				}
-				System.out.println(index + "completed");
+				cell = row.createCell(3);
+				cell.setCellValue((Integer) (mIndex + 1));
+				String[] rowText =	homePage.getBatsmenDataFromMatchResults(index);
+				for(int cInd = 0; cInd < rowText.length; cInd++) {
+					cell = row.createCell(4 + cInd);
+					cell.setCellValue((String) rowText[cInd]);
+
+				}
 				rowNum++;
 			}
-			
+
 			//Bowlers
 			if(mIndex == 0) {
 				row = bowling.createRow(0);
@@ -122,40 +110,43 @@ public class GetPlayerStats extends BaseTest {
 				cell.setCellValue((String) "Winner");
 				cell = row.createCell(2);
 				cell.setCellValue((String) "Loser");
+				cell = row.createCell(3);
+				cell.setCellValue((String) "Match");
 
 				String[] headers = homePage.getBowlersHeaders();
 				for(int hIndex = 0; hIndex < headers.length; hIndex++) {
-					cell = row.createCell(hIndex + 3);
+					cell = row.createCell(hIndex + 4);
 					cell.setCellValue((String) headers[hIndex] == null ? "" : headers[hIndex]);
 				}
 			}
-			
-			int bowlerCount = homePage.getBowlerCount();
-			
-			for(int index = 0; index< bowlerCount; index++){
 
-				String[] rowText =	homePage.getBowlerDataFromMatchResults(index);
+			int bowlerCount = homePage.getBowlerCount();
+
+			for(int index = 0; index< bowlerCount; index++){
 				row = bowling.createRow(bowRowNo);
-				for(int cInd = 0; cInd < rowText.length; cInd++) {
-					if(index == 0) {
+				if(index == 0) {
 					cell = row.createCell(0);
 					cell.setCellValue((String) vs);
 					cell = row.createCell(1);
 					cell.setCellValue((String) winner);
 					cell = row.createCell(2);
 					cell.setCellValue((String) loser);
-					}
-					
-					cell = row.createCell(3 + cInd);
-					cell.setCellValue((String) rowText[cInd]);
-					
 				}
-				System.out.println(index + "completed");
+				cell = row.createCell(3);
+				cell.setCellValue((Integer) (mIndex + 1));
+				String[] rowText =	homePage.getBowlerDataFromMatchResults(index);
+
+				for(int cInd = 0; cInd < rowText.length; cInd++) {
+					cell = row.createCell(4 + cInd);
+					cell.setCellValue((String) rowText[cInd]);
+
+				}
 				bowRowNo++;
 			}
-
+			System.out.println("Reading Match: " +(mIndex + 1)+ " Stats Completed...");
 			driver.navigate().back();
 			homePage.waitFor(5);
+			mDec--;
 		}
 
 		try {
@@ -170,7 +161,7 @@ public class GetPlayerStats extends BaseTest {
 	}
 
 	@Test()
-	public void getMostStats() {
+	public void getIPLMostStats() {
 		sheet = workbook.createSheet("MostRuns");
 		Row row = null;
 		Cell cell =null;
@@ -199,9 +190,10 @@ public class GetPlayerStats extends BaseTest {
 					cell.setCellValue((String) rowText[rIndex]);
 				}
 			}
-			System.out.println(index + "completed");
 		}
-
+		System.out.println("Reading Most Runs Completed...");
+		
+		homePage.windowScrollDown(600);
 		homePage.clickMostWickets();
 		sheet = workbook.createSheet("MostWickets");
 
@@ -228,9 +220,9 @@ public class GetPlayerStats extends BaseTest {
 					cell.setCellValue((String) rowText[rIndex]);
 				}
 			}
-			System.out.println(index + "completed");
 		}
-
+		System.out.println("Reading Most Wickets Completed...");
+		
 		try {
 			FileOutputStream outputStream = new FileOutputStream(MOST_STATS);
 			workbook.write(outputStream);
@@ -243,7 +235,7 @@ public class GetPlayerStats extends BaseTest {
 	}
 
 	@Test()
-	public void getMoneyStats() {
+	public void getD11MoneyStats() {
 		sheet = workbook.createSheet("MoneyStats");
 		long winnings = 0;
 		int entry =0;
@@ -271,7 +263,6 @@ public class GetPlayerStats extends BaseTest {
 
 				//Select Entry
 				homePage.clickInProgress(ind);
-				//int lBCount = homePage.getLeaderBoardCount();
 				int myTeams = homePage.getMyTeamsCount();
 
 				//Select Team
@@ -319,7 +310,7 @@ public class GetPlayerStats extends BaseTest {
 	}
 
 	@Test()
-	public void getJoinedStats() {
+	public void getD11JoinedStats() {
 		sheet = workbook.createSheet("JoinedStats");
 		//My Contest, Results
 		homePage.clickMyContests();
@@ -394,7 +385,7 @@ public class GetPlayerStats extends BaseTest {
 	}
 
 	@Test()
-	public void getLiveStats() {
+	public void getD11LiveStats() {
 		sheet = workbook.createSheet("InProgress");
 		int winnings = 0;
 		int entry = 0;
@@ -494,7 +485,6 @@ public class GetPlayerStats extends BaseTest {
 			row = sheet.createRow(rowNum++);
 			Cell cell = row.createCell(0);
 			cell.setCellValue((String) contestName);
-			//String[] teams = contestName.split("vs");
 
 			for (String field : player) {
 				cell = row.createCell(colNum++);

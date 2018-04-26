@@ -34,7 +34,10 @@ public class BaseTest {
 	public void readProperties() {
 		readPropertiesFile(configPropPath);
 		setUpDriver();
+		loginPage = new LoginPage(driver);
+		homePage = new HomePage(driver);
 		driver.get(prop.getProperty("url"));
+		signIn();
 	}
 
 	private void setUpDriver() {
@@ -45,7 +48,7 @@ public class BaseTest {
 		driver.manage().window().maximize();
 	}
 
-	@BeforeMethod
+	//@BeforeMethod
 	public void signIn() {
 		
 		if(!"https://www.iplt20.com/stats/2018".equals(driver.getCurrentUrl())) {
@@ -59,7 +62,7 @@ public class BaseTest {
 
 	@AfterMethod
 	public void signOut() {
-		homePage.clickMore();
+		//homePage.clickMore();
 		//homePage.clickLogout();
 	}
 

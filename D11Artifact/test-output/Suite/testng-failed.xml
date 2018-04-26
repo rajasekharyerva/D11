@@ -5,11 +5,9 @@
     <classes>
       <class name="com.d11.test.GetPlayerStats">
         <methods>
-          <include name="getMatchesStats"/>
-          <include name="loadPages"/>
           <include name="signOut"/>
           <include name="quitDriver"/>
-          <include name="signIn"/>
+          <include name="getIPLMatchesStats"/>
           <include name="readProperties"/>
         </methods>
       </class> <!-- com.d11.test.GetPlayerStats -->
