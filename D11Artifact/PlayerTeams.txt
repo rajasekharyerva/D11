@@ -108,3 +108,23 @@ Faf du Plessis:CHE
 Ricky Bhui:HYD
 Manan Vohra:BLR
 Harshal Patel:DEL
+Colin de Grandhomme:BLR
+Mohammad Nabi:HYD
+Basil Thampi:HYD
+David Miller:PNJ
+Amit Mishra:DEL
+Avesh Khan:DEL
+Liam Plunkett:DEL
+Prithvi Shaw:DEL
+Kedar Jadhav:CHE
+Dwayne Bravo:CHE
+Mark Wood:CHE
+Colin Munro:DEL
+Dan Christian:DEL
+Rinku Singh:KOL
+Vinay Kumar:KOL
+Shakib Al Hasan:HYD
+Rashid Khan:HYD
+Siddarth Kaul:HYD
+Mujeeb Ur Rahman:PNJ
+Karn Sharma:CHE
