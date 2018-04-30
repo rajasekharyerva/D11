@@ -7,7 +7,6 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -15,6 +14,9 @@ import org.openqa.selenium.support.PageFactory;
 public class HomePage extends BasePage{
 	@FindBy(xpath="//div[text()='My Contests']")
 	WebElement myContests;
+	
+	@FindBy(xpath="//div[text()='Home']")
+	WebElement home;
 
 	@FindBy(xpath="//div[text()='Results'] | (//a[contains(text(),'Results')])[1]")
 	WebElement results;
@@ -54,6 +56,9 @@ public class HomePage extends BasePage{
 
 	@FindBy(xpath="//div[contains(@class,'playerPoints_')]")
 	List<WebElement> playerPoints;
+	
+	@FindBy(xpath="//i[text()='info']")
+	List<WebElement> playerInfo;
 
 	@FindBy(xpath="//div[@class='toolbar-title']")
 	WebElement teamName;
@@ -129,6 +134,48 @@ public class HomePage extends BasePage{
 
 	@FindBy(xpath="//tbody/tr/td//span[contains(@class,'table__logo tLogo')]")
 	List<WebElement> logos;
+	
+	@FindBy(xpath="//a[contains(@href,'/cricket/leagues/Indian T20 League/811/')]")
+	List<WebElement> upcomingMatches;
+	
+	@FindBy(xpath="//div[text()='My Teams']")
+	WebElement mTeams;
+	
+	@FindBy(xpath="//span[text()='EDIT']")
+	WebElement edit;
+	
+	@FindBy(xpath="//div[text()='WK']")
+	WebElement wk;
+			
+	@FindBy(xpath="(//i[text()='keyboard_arrow_down'])[2]")
+	WebElement closePlayer;
+	
+	@FindBy(xpath="//div[contains(@class,'player-profile-stats-header text-upper player-profile-row')]/following-sibling::div//div[contains(@class,'player-profile-row--border player-profile-row')]")
+	List<WebElement> playerProfile;
+	
+	@FindBy(xpath="//div[@class='player-profile-toolBar']")
+	WebElement playerProfTB;
+	
+	@FindBy(xpath="//div[text()='Total Points']/following-sibling::div")
+	WebElement playerProfPts;
+	
+	@FindBy(xpath="//div[text()='Team']/ancestor::div[1]")
+	WebElement playerProfTeam;
+	
+	@FindBy(xpath="//div[text()='Role']/ancestor::div[1]")
+	WebElement playerProfRole;
+	
+	@FindBy(xpath="//div[contains(@class,'create-team__team-selector__player-card__cell create-team__team-selector__player-card__cell__col-player')]")
+	List<WebElement> teamSelector;
+	
+	@FindBy(xpath="//div[text()='BAT']")
+	WebElement bat;
+	
+	@FindBy(xpath="//div[text()='AR']")
+	WebElement ar;
+	
+	@FindBy(xpath="//div[text()='BOWL']")
+	WebElement bowl;
 
 	@FindBy(xpath="//div[text()='More']")
 	WebElement more;
@@ -147,6 +194,10 @@ public class HomePage extends BasePage{
 	public void clickMostRuns() {
 		this.click(mostRuns);
 	}
+	
+	public void clickClosePlayer() {
+		this.click(closePlayer);
+	}
 
 	public void clickMostWickets() {
 		this.click(mostWickets);
@@ -163,6 +214,10 @@ public class HomePage extends BasePage{
 
 	public void clickResults() {
 		this.click(results);
+	}
+	
+	public void clickHome() {
+		this.click(home);
 	}
 
 	public void clickLive() {
@@ -216,6 +271,14 @@ public class HomePage extends BasePage{
 	public int getContestJoinedCount() {
 		return contestJoined.size();
 	}
+	
+	public int getPlayerProfileCount() {
+		return playerProfile.size();
+	}
+	
+	public String getPlayerProfileText(int index) {
+		return playerProfile.get(index).getText();
+	}
 
 	public int getInProgressCount() {
 		return inProgress.size();
@@ -252,6 +315,23 @@ public class HomePage extends BasePage{
 	public String getTeamName() {
 		return teamName.getText();
 	}
+	
+	public String getPlayerProfileTB() {
+		return playerProfTB.getText();
+	}
+	
+	public String getPlayerProfileTeam() {
+		return playerProfTeam.getText();
+	}
+	
+	public String getPlayerProfileRole() {
+		return playerProfRole.getText();
+	}
+	
+	public String getPlayerProfilePoints() {
+		return playerProfPts.getText();
+	}
+	
 
 	public void clickMore() {
 		this.click(more);
@@ -335,6 +415,54 @@ public class HomePage extends BasePage{
 
 	public int getRowsSize() {
 		return this.rows.size();
+	}
+	
+	public int getTeamSelectorSize() {
+		return this.teamSelector.size();
+	}
+	
+	public String getTeamSelectorText(int index) {
+		return this.teamSelector.get(index).getText();
+	}
+	
+	public int getUpcomingMatchesCount() {
+		return this.upcomingMatches.size();
+	}
+	
+	public void clickUpcomingMatch(int index) {
+		this.click(upcomingMatches.get(index));
+	}
+	
+	public void clickPlayerInfo(int index) {
+		this.click(playerInfo.get(index));
+	}
+	
+	public int getPlayerInfoSize() {
+		return this.playerInfo.size();
+	}
+	
+	public void clickMyTeams() {
+		this.click(mTeams);
+	}
+	
+	public void clickWK() {
+		this.click(wk);
+	}
+	
+	public void clickBAT() {
+		this.click(bat);
+	}
+	
+	public void clickAR() {
+		this.click(ar);
+	}
+	
+	public void clickBOWL() {
+		this.click(bowl);
+	}
+	
+	public void clickTeamEdit() {
+		this.click(edit);
 	}
 	
 	public int getBatsmenCount() {

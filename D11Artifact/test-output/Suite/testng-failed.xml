@@ -7,7 +7,7 @@
         <methods>
           <include name="signOut"/>
           <include name="quitDriver"/>
-          <include name="getIPLMatchesStats"/>
+          <include name="getD11PlayerStats"/>
           <include name="readProperties"/>
         </methods>
       </class> <!-- com.d11.test.GetPlayerStats -->

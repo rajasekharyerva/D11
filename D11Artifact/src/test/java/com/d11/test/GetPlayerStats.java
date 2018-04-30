@@ -22,10 +22,11 @@ import com.d11.page.LoginPage;
 public class GetPlayerStats extends BaseTest {
 
 	XSSFWorkbook workbook = new XSSFWorkbook();
-	XSSFSheet sheet, batting, bowling = null;
+	XSSFSheet sheet, batting, bowling, d11 = null;
 	String JOINED_STATS = "JoinedStats.xlsx";
 	String MOST_STATS = "MostStats.xlsx";
 	String MATCHES_STATS = "MatchesStats.xlsx";
+	String D11_MATCHES_STATS = "D11MatchesStats.xlsx";
 	String MONEY_STATS = "MoneyStats.xlsx";
 	String IN_PROGRESS = "InProgress.xlsx";
 	String READ_FILE = "PlayerTeams.txt";
@@ -38,6 +39,115 @@ public class GetPlayerStats extends BaseTest {
 	int counter = 1;
 	int rowNo = 1;
 	Map<String, String> playerTeamMap = new HashMap<String, String>();
+	
+	
+	@Test()
+	public void getD11PlayerStats() {
+		d11 = workbook.createSheet("PlPoints");
+		Row row = null;
+		Cell cell =null;
+		
+		homePage.clickHome();
+		int upMatCnt = homePage.getUpcomingMatchesCount();
+		homePage.waitFor(2);
+		
+		for(int mIndex = 0; mIndex <1; mIndex++) {
+			homePage.clickUpcomingMatch(mIndex);
+			homePage.clickMyTeams();
+			homePage.clickTeamEdit();
+
+			for(int i = 0 ; i < 4; i++) {
+				switch(i) {
+				case 0: homePage.clickWK();
+				break;
+				case 1: homePage.clickBAT();
+				break;
+				case 2: homePage.clickAR();
+				break;
+				case 3: homePage.clickBOWL();
+				break;
+				}
+
+				int playerInfoSize = homePage.getPlayerInfoSize();
+				int  tss = homePage.getTeamSelectorSize();
+				
+				for(int plInd = 0; plInd < playerInfoSize; plInd++) {
+					String playerText = homePage.getTeamSelectorText(plInd);
+					if(playerText.contains("Points: 0")) {
+						continue;
+					}
+					
+					if(mIndex == 0) {
+						row = d11.createRow(0);
+						cell = row.createCell(0);
+						cell.setCellValue((String) "VS");
+						cell = row.createCell(1);
+						cell.setCellValue((String) "TEAM");
+						cell = row.createCell(2);
+						cell.setCellValue((String) "Player Name");
+						cell = row.createCell(3);
+						cell.setCellValue((String) "ROLE");
+						cell = row.createCell(4);
+						cell.setCellValue((String) "Total Points");
+						cell = row.createCell(5);
+						cell.setCellValue((String) "Match Date");
+						cell = row.createCell(6);
+						cell.setCellValue((String) "Points");
+						cell = row.createCell(7);
+						cell.setCellValue((String) "Selected By");
+					}
+					
+					homePage.clickPlayerInfo(plInd);
+					int plProfCount = homePage.getPlayerProfileCount();
+					for(int allInd = 0; allInd < plProfCount; allInd++) {
+						//Reading Player Points
+						String plName = homePage.getPlayerProfileTB().split("\n")[1];
+						String plPts = homePage.getPlayerProfilePoints();
+						String plTeam = homePage.getPlayerProfileTeam().split("\n")[1];
+						String plRole = homePage.getPlayerProfileRole().split("\n")[1];
+						String[] plText = homePage.getPlayerProfileText(allInd).split("\n");
+						//Write to Excel
+						row = d11.createRow(rowNo);
+						cell = row.createCell(0);
+						cell.setCellValue((String) plText[0]);
+						cell = row.createCell(1);
+						cell.setCellValue((String) plTeam);
+						cell = row.createCell(2);
+						cell.setCellValue((String) plName);
+						cell = row.createCell(3);
+						cell.setCellValue((String) plRole);
+						cell = row.createCell(4);
+						cell.setCellValue((Double) Double.parseDouble(plPts));
+						cell = row.createCell(5);
+						cell.setCellValue((String) plText[1]);
+						cell = row.createCell(6);
+						cell.setCellValue((Double) Double.parseDouble(plText[2]));
+						cell = row.createCell(7);
+						cell.setCellValue((Double) Double.parseDouble(plText[3].substring(0, plText[3].length() - 1)));
+						rowNo++;
+						
+					}
+					//Click close
+					homePage.clickClosePlayer();
+					if(plInd % 7 == 0 & plInd != 0)
+					homePage.windowScrollDown(500);
+				}
+			}
+			//Click Back
+			homePage.clickArrowBack();
+			homePage.clickArrowBack();
+		}
+
+		try {
+			FileOutputStream outputStream = new FileOutputStream(D11_MATCHES_STATS);
+			workbook.write(outputStream);
+			workbook.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Test()
 	public void getIPLMatchesStats() {
@@ -45,6 +155,43 @@ public class GetPlayerStats extends BaseTest {
 		bowling = workbook.createSheet("Bowling");
 		Row row = null;
 		Cell cell =null;
+		BufferedReader br = null;
+		FileReader fr = null;
+		BufferedWriter bw = null;
+		FileWriter fw = null;
+
+		try {
+			fr = new FileReader(READ_FILE);
+			br = new BufferedReader(fr);
+			fw = new FileWriter(WRITE_FILE, true);
+			bw = new BufferedWriter(fw);
+			String sCurrentLine;
+
+			while ((sCurrentLine = br.readLine()) != null) {
+				String[] data = sCurrentLine.split(":");
+				playerTeamMap.put(data[0].trim(), data[1].trim());
+			}
+
+			for (Map.Entry<String,String> entry : playerTeamMap.entrySet()) 
+				bw.write(entry.getKey() + ":" + entry.getValue()+ "\n");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)
+					br.close();
+				if (fr != null)
+					fr.close();
+				if (bw != null)
+					bw.close();
+				if (fw != null)
+					fw.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		
 		homePage.clickResults();
 		homePage.waitFor(2);
 		int mDec = 23;
@@ -70,10 +217,12 @@ public class GetPlayerStats extends BaseTest {
 				cell.setCellValue((String) "Loser");
 				cell = row.createCell(3);
 				cell.setCellValue((String) "Match");
+				cell = row.createCell(4);
+				cell.setCellValue((String) "Team");
 
 				String[] headers = homePage.getBatsmenHeaders();
 				for(int hIndex = 0; hIndex < headers.length; hIndex++) {
-					cell = row.createCell(hIndex + 4);
+					cell = row.createCell(hIndex + 5);
 					cell.setCellValue((String) headers[hIndex] == null ? "" : headers[hIndex]);
 				}
 			}
@@ -82,21 +231,27 @@ public class GetPlayerStats extends BaseTest {
 
 			for(int index = 0; index< batsmenCount; index++){
 				row = batting.createRow(rowNum);
-				if(index == 0) {
+				//if(index == 0) {
 					cell = row.createCell(0);
 					cell.setCellValue((String) vs);
 					cell = row.createCell(1);
 					cell.setCellValue((String) winner);
 					cell = row.createCell(2);
 					cell.setCellValue((String) loser);
-				}
+				//}
 				cell = row.createCell(3);
 				cell.setCellValue((Integer) (mIndex + 1));
+				
 				String[] rowText =	homePage.getBatsmenDataFromMatchResults(index);
+				cell = row.createCell(4);
+				cell.setCellValue((String) playerTeamMap.get(rowText[0]));
+				
 				for(int cInd = 0; cInd < rowText.length; cInd++) {
-					cell = row.createCell(4 + cInd);
+					cell = row.createCell(5 + cInd);
+					if(cInd == 0 | cInd == 1) 
 					cell.setCellValue((String) rowText[cInd]);
-
+					else
+					cell.setCellValue((Double) Double.parseDouble(rowText[cInd]));
 				}
 				rowNum++;
 			}
@@ -112,10 +267,12 @@ public class GetPlayerStats extends BaseTest {
 				cell.setCellValue((String) "Loser");
 				cell = row.createCell(3);
 				cell.setCellValue((String) "Match");
+				cell = row.createCell(4);
+				cell.setCellValue((String) "Team");
 
 				String[] headers = homePage.getBowlersHeaders();
 				for(int hIndex = 0; hIndex < headers.length; hIndex++) {
-					cell = row.createCell(hIndex + 4);
+					cell = row.createCell(hIndex + 5);
 					cell.setCellValue((String) headers[hIndex] == null ? "" : headers[hIndex]);
 				}
 			}
@@ -124,22 +281,25 @@ public class GetPlayerStats extends BaseTest {
 
 			for(int index = 0; index< bowlerCount; index++){
 				row = bowling.createRow(bowRowNo);
-				if(index == 0) {
+				//if(index == 0) {
 					cell = row.createCell(0);
 					cell.setCellValue((String) vs);
 					cell = row.createCell(1);
 					cell.setCellValue((String) winner);
 					cell = row.createCell(2);
 					cell.setCellValue((String) loser);
-				}
+				//}
 				cell = row.createCell(3);
 				cell.setCellValue((Integer) (mIndex + 1));
 				String[] rowText =	homePage.getBowlerDataFromMatchResults(index);
-
+				cell = row.createCell(4);
+				cell.setCellValue((String) playerTeamMap.get(rowText[0]));
 				for(int cInd = 0; cInd < rowText.length; cInd++) {
-					cell = row.createCell(4 + cInd);
+					cell = row.createCell(5 + cInd);
+					if(cInd == 0) 
 					cell.setCellValue((String) rowText[cInd]);
-
+					else
+					cell.setCellValue((Double) Double.parseDouble(rowText[cInd]));
 				}
 				bowRowNo++;
 			}
