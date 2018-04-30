@@ -1,0 +1,13 @@
+Windows:
+Download, Install Java & set-up env var
+The JDK software is installed on your computer, for example, at C:\Program Files\Java\jdk1.x.x_xx. 
+Set JAVA_HOME:
+Right click My Computer and select Properties.
+On the Advanced tab, select Environment Variables, and then edit JAVA_HOME to point to where the JDK software is located, for example, C:\Program Files\Java\jdk1.x.x_xx
+
+Download Apache Maven and set=up env var
+M2_HOME=C:\Program Files\Apache Software Foundation\apache-maven-x.x.x 
+M2=%M2_HOME%\bin 
+MAVEN_OPTS=-Xms256m -Xmx512m
+
+Download Intellij(preferrable) editor(or your choice)
