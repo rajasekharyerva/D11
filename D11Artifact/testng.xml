@@ -7,10 +7,10 @@
             <methods>
             <!-- <include name="getIPLMatchesStats"></include> -->
             <!-- <include name="getIPLMostStats"></include> -->
-           <!--  <include name="getD11MoneyStats"></include> -->
-             <include name="getD11PlayerStats"></include>
+            <!-- <include name="getD11MoneyStats"></include> -->
+            <!-- <include name="getD11PlayerStats"></include> -->
             <!-- <include name="getD11JoinedStats"></include> -->
-            <!-- <include name="getD11LiveStats"></include> -->
+            <include name="getD11LiveStats"></include>
             </methods>
             </class>
         </classes>

@@ -26,6 +26,13 @@ public class BasePage {
 	public void windowScrollDown(int pixel) {
 		JavascriptExecutor jse = (JavascriptExecutor)driver;
 		jse.executeScript("window.scrollBy(0,"+pixel+")", "");
+		waitFor(3);
+	}
+	
+	public void windowScrollTop() {
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		jse.executeScript("window.scrollTo(document.body.scrollHeight,0)");
+		waitFor(3);
 	}
 
 	public void sendKeys(WebElement we, String input) {

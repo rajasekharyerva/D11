@@ -13,11 +13,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import com.d11.page.HomePage;
-import com.d11.page.LoginPage;
 
 public class GetPlayerStats extends BaseTest {
 
@@ -38,20 +34,21 @@ public class GetPlayerStats extends BaseTest {
 	int bowRowNo = 1;
 	int counter = 1;
 	int rowNo = 1;
+	boolean header = true;
 	Map<String, String> playerTeamMap = new HashMap<String, String>();
-	
-	
+
+
 	@Test()
 	public void getD11PlayerStats() {
 		d11 = workbook.createSheet("PlPoints");
 		Row row = null;
 		Cell cell =null;
-		
+
 		homePage.clickHome();
 		int upMatCnt = homePage.getUpcomingMatchesCount();
 		homePage.waitFor(2);
-		
-		for(int mIndex = 0; mIndex <1; mIndex++) {
+
+		for(int mIndex = 0; mIndex < upMatCnt; mIndex++) {
 			homePage.clickUpcomingMatch(mIndex);
 			homePage.clickMyTeams();
 			homePage.clickTeamEdit();
@@ -70,14 +67,17 @@ public class GetPlayerStats extends BaseTest {
 
 				int playerInfoSize = homePage.getPlayerInfoSize();
 				int  tss = homePage.getTeamSelectorSize();
-				
+
 				for(int plInd = 0; plInd < playerInfoSize; plInd++) {
 					String playerText = homePage.getTeamSelectorText(plInd);
 					if(playerText.contains("Points: 0")) {
+						if(plInd == 7 | plInd == 16)
+							homePage.windowScrollDown(550);
 						continue;
 					}
-					
-					if(mIndex == 0) {
+					System.out.println(plInd);
+
+					if(header) {
 						row = d11.createRow(0);
 						cell = row.createCell(0);
 						cell.setCellValue((String) "VS");
@@ -95,8 +95,9 @@ public class GetPlayerStats extends BaseTest {
 						cell.setCellValue((String) "Points");
 						cell = row.createCell(7);
 						cell.setCellValue((String) "Selected By");
+						header = false;
 					}
-					
+
 					homePage.clickPlayerInfo(plInd);
 					int plProfCount = homePage.getPlayerProfileCount();
 					for(int allInd = 0; allInd < plProfCount; allInd++) {
@@ -106,6 +107,9 @@ public class GetPlayerStats extends BaseTest {
 						String plTeam = homePage.getPlayerProfileTeam().split("\n")[1];
 						String plRole = homePage.getPlayerProfileRole().split("\n")[1];
 						String[] plText = homePage.getPlayerProfileText(allInd).split("\n");
+
+						if(allInd == 0 & playerTeamMap.get(plName) != null)
+							break;
 						//Write to Excel
 						row = d11.createRow(rowNo);
 						cell = row.createCell(0);
@@ -125,12 +129,12 @@ public class GetPlayerStats extends BaseTest {
 						cell = row.createCell(7);
 						cell.setCellValue((Double) Double.parseDouble(plText[3].substring(0, plText[3].length() - 1)));
 						rowNo++;
-						
+						playerTeamMap.put(plName, plName);
 					}
 					//Click close
 					homePage.clickClosePlayer();
-					if(plInd % 7 == 0 & plInd != 0)
-					homePage.windowScrollDown(500);
+					if(plInd == 7 | plInd == 16)
+						homePage.windowScrollDown(550);
 				}
 			}
 			//Click Back
@@ -191,7 +195,7 @@ public class GetPlayerStats extends BaseTest {
 				ex.printStackTrace();
 			}
 		}
-		
+
 		homePage.clickResults();
 		homePage.waitFor(2);
 		int mDec = 23;
@@ -232,26 +236,26 @@ public class GetPlayerStats extends BaseTest {
 			for(int index = 0; index< batsmenCount; index++){
 				row = batting.createRow(rowNum);
 				//if(index == 0) {
-					cell = row.createCell(0);
-					cell.setCellValue((String) vs);
-					cell = row.createCell(1);
-					cell.setCellValue((String) winner);
-					cell = row.createCell(2);
-					cell.setCellValue((String) loser);
+				cell = row.createCell(0);
+				cell.setCellValue((String) vs);
+				cell = row.createCell(1);
+				cell.setCellValue((String) winner);
+				cell = row.createCell(2);
+				cell.setCellValue((String) loser);
 				//}
 				cell = row.createCell(3);
 				cell.setCellValue((Integer) (mIndex + 1));
-				
+
 				String[] rowText =	homePage.getBatsmenDataFromMatchResults(index);
 				cell = row.createCell(4);
 				cell.setCellValue((String) playerTeamMap.get(rowText[0]));
-				
+
 				for(int cInd = 0; cInd < rowText.length; cInd++) {
 					cell = row.createCell(5 + cInd);
 					if(cInd == 0 | cInd == 1) 
-					cell.setCellValue((String) rowText[cInd]);
+						cell.setCellValue((String) rowText[cInd]);
 					else
-					cell.setCellValue((Double) Double.parseDouble(rowText[cInd]));
+						cell.setCellValue((Double) Double.parseDouble(rowText[cInd]));
 				}
 				rowNum++;
 			}
@@ -282,12 +286,12 @@ public class GetPlayerStats extends BaseTest {
 			for(int index = 0; index< bowlerCount; index++){
 				row = bowling.createRow(bowRowNo);
 				//if(index == 0) {
-					cell = row.createCell(0);
-					cell.setCellValue((String) vs);
-					cell = row.createCell(1);
-					cell.setCellValue((String) winner);
-					cell = row.createCell(2);
-					cell.setCellValue((String) loser);
+				cell = row.createCell(0);
+				cell.setCellValue((String) vs);
+				cell = row.createCell(1);
+				cell.setCellValue((String) winner);
+				cell = row.createCell(2);
+				cell.setCellValue((String) loser);
 				//}
 				cell = row.createCell(3);
 				cell.setCellValue((Integer) (mIndex + 1));
@@ -297,9 +301,9 @@ public class GetPlayerStats extends BaseTest {
 				for(int cInd = 0; cInd < rowText.length; cInd++) {
 					cell = row.createCell(5 + cInd);
 					if(cInd == 0) 
-					cell.setCellValue((String) rowText[cInd]);
+						cell.setCellValue((String) rowText[cInd]);
 					else
-					cell.setCellValue((Double) Double.parseDouble(rowText[cInd]));
+						cell.setCellValue((Double) Double.parseDouble(rowText[cInd]));
 				}
 				bowRowNo++;
 			}
@@ -352,7 +356,7 @@ public class GetPlayerStats extends BaseTest {
 			}
 		}
 		System.out.println("Reading Most Runs Completed...");
-		
+
 		homePage.windowScrollDown(600);
 		homePage.clickMostWickets();
 		sheet = workbook.createSheet("MostWickets");
@@ -382,7 +386,7 @@ public class GetPlayerStats extends BaseTest {
 			}
 		}
 		System.out.println("Reading Most Wickets Completed...");
-		
+
 		try {
 			FileOutputStream outputStream = new FileOutputStream(MOST_STATS);
 			workbook.write(outputStream);

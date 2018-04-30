@@ -455,10 +455,12 @@ public class HomePage extends BasePage{
 	
 	public void clickAR() {
 		this.click(ar);
+		windowScrollTop();
 	}
 	
 	public void clickBOWL() {
 		this.click(bowl);
+		windowScrollTop();
 	}
 	
 	public void clickTeamEdit() {
