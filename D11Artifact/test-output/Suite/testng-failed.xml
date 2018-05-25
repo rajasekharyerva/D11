@@ -7,7 +7,7 @@
         <methods>
           <include name="signOut"/>
           <include name="quitDriver"/>
-          <include name="getUnDeuxTroisStats"/>
+          <include name="writeToMaster"/>
           <include name="readProperties"/>
         </methods>
       </class> <!-- com.d11.test.UnDeuxTrois -->

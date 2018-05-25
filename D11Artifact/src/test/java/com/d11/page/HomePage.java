@@ -224,9 +224,10 @@ public class HomePage extends BasePage{
 		this.click(mostRuns);
 	}
 
-	public List<String> getRowData() {
+	public List<String> getUpdatedRowData(String lastUpdated) {
 		int noOfRows = 0;
 		boolean clickNext = true;
+		boolean done = false;
 		//String[] rowData = new String[noOfRows/2];
 		//int rIndex = 0;
 		List<String> rowList = new ArrayList<String>();
@@ -234,6 +235,12 @@ public class HomePage extends BasePage{
 		while(clickNext) {
 			noOfRows = tableRows.size();
 			for(int i=0; i<noOfRows; i++) {
+				if(tableRows.get(i).getText().contains(lastUpdated)) {
+					done = true;
+					clickNext = false;
+					break;
+				}
+					
 				if(i%2 == 0) {
 					//rowData[rIndex] = tableRows.get(i).getText();
 					//rIndex++;
@@ -242,7 +249,9 @@ public class HomePage extends BasePage{
 				}
 			}
 
-			clickNext = verifyNextElementPresent();
+			if(!done) 
+				clickNext = verifyNextElementPresent();
+			
 			if(clickNext)
 				clickNext();
 		}

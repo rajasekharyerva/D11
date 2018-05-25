@@ -15,8 +15,8 @@
             </class> -->
             <class name="com.d11.test.UnDeuxTrois">
             <methods>
-            <!-- <include name="getUnDeuxTroisStats"></include> -->
-           
+            <include name="getUnDeuxTroisStats"></include>
+            <!-- <include name="writeToMaster"></include> -->
             </methods>
             </class>
         </classes>
