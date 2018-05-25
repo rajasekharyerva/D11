@@ -1,6 +1,7 @@
 package com.d11.page;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,11 +11,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends BasePage{
 	@FindBy(xpath="//div[text()='My Contests']")
 	WebElement myContests;
-	
+
 	@FindBy(xpath="//div[text()='Home']")
 	WebElement home;
 
@@ -56,7 +60,7 @@ public class HomePage extends BasePage{
 
 	@FindBy(xpath="//div[contains(@class,'playerPoints_')]")
 	List<WebElement> playerPoints;
-	
+
 	@FindBy(xpath="//i[text()='info']")
 	List<WebElement> playerInfo;
 
@@ -107,13 +111,13 @@ public class HomePage extends BasePage{
 
 	@FindBy(xpath="//tr[contains(@class,'batsmanInns player-popup-link')]")
 	List<WebElement> batsmenRows;
-	
+
 	@FindBy(xpath="//tr[@class='player-popup-link']")
 	List<WebElement> bowlerRows;
-	
+
 	@FindBy(xpath="(//table[@class='batsmen'])[1]/thead/tr/th")
 	List<WebElement> batsmenHeaders;
-	
+
 	@FindBy(xpath="(//table[@class='bowlers'])[1]/thead/tr/th")
 	List<WebElement> bowlerHeaders;
 
@@ -134,46 +138,46 @@ public class HomePage extends BasePage{
 
 	@FindBy(xpath="//tbody/tr/td//span[contains(@class,'table__logo tLogo')]")
 	List<WebElement> logos;
-	
+
 	@FindBy(xpath="//a[contains(@href,'/cricket/leagues/Indian T20 League/811/')]")
 	List<WebElement> upcomingMatches;
-	
+
 	@FindBy(xpath="//div[text()='My Teams']")
 	WebElement mTeams;
-	
+
 	@FindBy(xpath="//span[text()='EDIT']")
 	WebElement edit;
-	
+
 	@FindBy(xpath="//div[text()='WK']")
 	WebElement wk;
-			
+
 	@FindBy(xpath="(//i[text()='keyboard_arrow_down'])[2]")
 	WebElement closePlayer;
-	
+
 	@FindBy(xpath="//div[contains(@class,'player-profile-stats-header text-upper player-profile-row')]/following-sibling::div//div[contains(@class,'player-profile-row--border player-profile-row')]")
 	List<WebElement> playerProfile;
-	
+
 	@FindBy(xpath="//div[@class='player-profile-toolBar']")
 	WebElement playerProfTB;
-	
+
 	@FindBy(xpath="//div[text()='Total Points']/following-sibling::div")
 	WebElement playerProfPts;
-	
+
 	@FindBy(xpath="//div[text()='Team']/ancestor::div[1]")
 	WebElement playerProfTeam;
-	
+
 	@FindBy(xpath="//div[text()='Role']/ancestor::div[1]")
 	WebElement playerProfRole;
-	
+
 	@FindBy(xpath="//div[contains(@class,'create-team__team-selector__player-card__cell create-team__team-selector__player-card__cell__col-player')]")
 	List<WebElement> teamSelector;
-	
+
 	@FindBy(xpath="//div[text()='BAT']")
 	WebElement bat;
-	
+
 	@FindBy(xpath="//div[text()='AR']")
 	WebElement ar;
-	
+
 	@FindBy(xpath="//div[text()='BOWL']")
 	WebElement bowl;
 
@@ -186,6 +190,31 @@ public class HomePage extends BasePage{
 	@FindBy(xpath="//div[text()='Log Out']")
 	WebElement logOut;
 
+	@FindBy(xpath="//a[text()='Transaction History']")
+	WebElement transHistory;
+
+	@FindBy(xpath="//input[@id='as_confirmPassword']")
+	WebElement confirmPassword;
+
+	@FindBy(xpath="//input[@onclick='return validateConfirmPasswordAccSumry();']")
+	WebElement OKconfirmPassword;
+
+	@FindBy(xpath="//select[@name='dateRange']")
+	WebElement dateRange;
+
+	@FindBy(xpath="//select[@name='txnType']")
+	WebElement txnType;
+
+	@FindBy(xpath="//input[@onclick='setHdnVal()']")
+	WebElement submit;
+
+	@FindBy(xpath="//a[text()='Next']")
+	WebElement next;
+
+	@FindBy(xpath="//table[@id='account_dts']/tbody/tr")
+	List<WebElement> tableRows;
+
+
 	public HomePage(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
@@ -194,7 +223,82 @@ public class HomePage extends BasePage{
 	public void clickMostRuns() {
 		this.click(mostRuns);
 	}
-	
+
+	public List<String> getRowData() {
+		int noOfRows = 0;
+		boolean clickNext = true;
+		//String[] rowData = new String[noOfRows/2];
+		//int rIndex = 0;
+		List<String> rowList = new ArrayList<String>();
+
+		while(clickNext) {
+			noOfRows = tableRows.size();
+			for(int i=0; i<noOfRows; i++) {
+				if(i%2 == 0) {
+					//rowData[rIndex] = tableRows.get(i).getText();
+					//rIndex++;
+					rowList.add(tableRows.get(i).getText());
+
+				}
+			}
+
+			clickNext = verifyNextElementPresent();
+			if(clickNext)
+				clickNext();
+		}
+		/*for(WebElement row: tableRows) {
+			System.out.println(row.getText());
+		}*/
+
+		return rowList;
+	}
+
+	public void clickNext() {
+		this.click(next);
+	}
+
+	public boolean verifyNextElementPresent() {
+		WebDriverWait wdw = new WebDriverWait(getDriver(), 10);
+		try {
+			String temp = next.toString().split(">")[1];
+			String[] locInfo = temp.split(":");
+			locInfo[1] = locInfo[1].substring(0, locInfo[1].length() - 1);
+			if("xpath".equals(locInfo[0].trim()))
+				wdw.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locInfo[1])));
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	public void clickSubmit() {
+		this.click(submit);
+	}
+
+	public void clickOKConfirmPassword() {
+		this.click(OKconfirmPassword);
+	}
+
+	public void selectDateRange30Days(String Days30) {
+		Select dateRange = new Select(this.dateRange);
+		dateRange.selectByVisibleText("30 Days");
+		waitFor(2);
+	}
+
+	public void selectTransactionType(String All) {
+		Select txnType = new Select(this.txnType);
+		txnType.selectByVisibleText("All");
+		waitFor(2);
+	}
+
+	public void clickTransactionHistory() {
+		this.click(transHistory);
+	}
+
+	public void setConfirmPassword(String input) {
+		this.sendKeys(confirmPassword, input);
+	}
+
 	public void clickClosePlayer() {
 		this.click(closePlayer);
 	}
@@ -215,7 +319,7 @@ public class HomePage extends BasePage{
 	public void clickResults() {
 		this.click(results);
 	}
-	
+
 	public void clickHome() {
 		this.click(home);
 	}
@@ -271,11 +375,11 @@ public class HomePage extends BasePage{
 	public int getContestJoinedCount() {
 		return contestJoined.size();
 	}
-	
+
 	public int getPlayerProfileCount() {
 		return playerProfile.size();
 	}
-	
+
 	public String getPlayerProfileText(int index) {
 		return playerProfile.get(index).getText();
 	}
@@ -315,23 +419,23 @@ public class HomePage extends BasePage{
 	public String getTeamName() {
 		return teamName.getText();
 	}
-	
+
 	public String getPlayerProfileTB() {
 		return playerProfTB.getText();
 	}
-	
+
 	public String getPlayerProfileTeam() {
 		return playerProfTeam.getText();
 	}
-	
+
 	public String getPlayerProfileRole() {
 		return playerProfRole.getText();
 	}
-	
+
 	public String getPlayerProfilePoints() {
 		return playerProfPts.getText();
 	}
-	
+
 
 	public void clickMore() {
 		this.click(more);
@@ -396,7 +500,7 @@ public class HomePage extends BasePage{
 		}
 		return headers;
 	}
-	
+
 	public String[] getBowlersHeaders() {
 		String[] headers = new String[this.bowlerHeaders.size()];
 		for(int hIndex = 0; hIndex < headers.length; hIndex++) {
@@ -404,7 +508,7 @@ public class HomePage extends BasePage{
 		}
 		return headers;
 	}
-	
+
 	public String[] getHeaders() {
 		String[] headers = new String[this.headers.size()];
 		for(int hIndex = 0; hIndex < headers.length; hIndex++) {
@@ -416,61 +520,61 @@ public class HomePage extends BasePage{
 	public int getRowsSize() {
 		return this.rows.size();
 	}
-	
+
 	public int getTeamSelectorSize() {
 		return this.teamSelector.size();
 	}
-	
+
 	public String getTeamSelectorText(int index) {
 		return this.teamSelector.get(index).getText();
 	}
-	
+
 	public int getUpcomingMatchesCount() {
 		return this.upcomingMatches.size();
 	}
-	
+
 	public void clickUpcomingMatch(int index) {
 		this.click(upcomingMatches.get(index));
 	}
-	
+
 	public void clickPlayerInfo(int index) {
 		this.click(playerInfo.get(index));
 	}
-	
+
 	public int getPlayerInfoSize() {
 		return this.playerInfo.size();
 	}
-	
+
 	public void clickMyTeams() {
 		this.click(mTeams);
 	}
-	
+
 	public void clickWK() {
 		this.click(wk);
 	}
-	
+
 	public void clickBAT() {
 		this.click(bat);
 	}
-	
+
 	public void clickAR() {
 		this.click(ar);
 		windowScrollTop();
 	}
-	
+
 	public void clickBOWL() {
 		this.click(bowl);
 		windowScrollTop();
 	}
-	
+
 	public void clickTeamEdit() {
 		this.click(edit);
 	}
-	
+
 	public int getBatsmenCount() {
 		return this.batsmenRows.size();
 	}
-	
+
 	public int getBowlerCount() {
 		return this.bowlerRows.size();
 	}
@@ -502,18 +606,18 @@ public class HomePage extends BasePage{
 		List<WebElement> colEls = null;
 		String[] colArr = null;
 		boolean retry = true;
-		
+
 		while(retry) {
 			try {
 				colEls = batsmenRows.get(index).findElements(By.xpath(".//td"));
-				
+
 				if(colEls.size() != 0 & colEls.size() == 8) {
 					colArr = new String[colEls.size() - 1];
 					for(int cIndex = 1; cIndex < colEls.size(); cIndex++) {
 						colArr[cIndex - 1] = colEls.get(cIndex).getText();
+					}
 				}
-			}
-			retry = false;
+				retry = false;
 			}catch(StaleElementReferenceException e) {
 				retry = true;
 				System.out.println("StaleElementReferenceException occured retrying...");
@@ -523,23 +627,23 @@ public class HomePage extends BasePage{
 		}
 		return colArr;
 	}
-	
+
 	public String[] getBowlerDataFromMatchResults(int index) {
 		List<WebElement> colEls = null;
 		String[] colArr = null;
 		boolean retry = true;
-		
+
 		while(retry) {
 			try {
 				colEls = bowlerRows.get(index).findElements(By.xpath(".//td"));
-				
+
 				if(colEls.size() != 0 & colEls.size() == 7) {
 					colArr = new String[colEls.size() - 1];
 					for(int cIndex = 1; cIndex < colEls.size(); cIndex++) {
 						colArr[cIndex - 1] = colEls.get(cIndex).getText();
+					}
 				}
-			}
-			retry = false;
+				retry = false;
 			}catch(StaleElementReferenceException e) {
 				retry = true;
 				System.out.println("StaleElementReferenceException occured retrying...");

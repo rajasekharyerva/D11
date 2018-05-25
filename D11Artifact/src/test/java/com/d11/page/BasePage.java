@@ -1,5 +1,6 @@
 package com.d11.page;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -34,6 +35,11 @@ public class BasePage {
 		jse.executeScript("window.scrollTo(document.body.scrollHeight,0)");
 		waitFor(3);
 	}
+	
+	public void sendKeysTab(WebElement we) {
+		we.sendKeys(Keys.TAB);
+		waitFor(1);
+	}
 
 	public void sendKeys(WebElement we, String input) {
 		Actions actions = new Actions(driver);
@@ -41,6 +47,17 @@ public class BasePage {
 		actions.click();
 		actions.sendKeys(input);
 		actions.build().perform();
+		waitFor(1);
+	}
+	
+	public void sendKeysWebDriver(WebElement we, String input) {
+		we.sendKeys(input);
+		waitFor(1);
+	}
+	
+	public void sendKeysJavascriptExecutor(String id, String input) {
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		jse.executeScript("document.getElementById('"+id+"').setAttribute('value', '"+input+"')");
 		waitFor(1);
 	}
 

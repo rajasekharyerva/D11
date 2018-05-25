@@ -48,7 +48,7 @@ public class GetPlayerStats extends BaseTest {
 		int upMatCnt = homePage.getUpcomingMatchesCount();
 		homePage.waitFor(2);
 
-		for(int mIndex = 0; mIndex < 3; mIndex++) {
+		for(int mIndex = 0; mIndex < 1; mIndex++) {
 			homePage.clickUpcomingMatch(mIndex);
 			homePage.clickMyTeams();
 			homePage.clickTeamEdit();

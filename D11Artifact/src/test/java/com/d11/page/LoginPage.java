@@ -8,13 +8,16 @@ public class LoginPage extends BasePage{
 	@FindBy(xpath="//a[@id='login_jump'] | //a[@id='login_desktop']")
 	WebElement signIn;
 
-	@FindBy(xpath="//input[@id='LoginFormEmail']")
+	@FindBy(xpath="//input[@id='LoginFormEmail' or @id='userid']")
 	WebElement email;
 
 	@FindBy(xpath="//input[@id='LoginFormPassword']")
 	WebElement password;
+	
+	@FindBy(xpath="//input[@id='pwd']")
+	WebElement password2;
 
-	@FindBy(xpath="//a[@id='LoginFormSubmit']")
+	@FindBy(xpath="//a[@id='LoginFormSubmit'] | //input[@id='signin_submit']")
 	WebElement login;
 
 	public LoginPage(WebDriver driver) {
@@ -34,8 +37,16 @@ public class LoginPage extends BasePage{
 	public void setEmail(String email) {
 		this.sendKeys(this.email, email);
 	}
+	
+	public void pressTabAfterSetEmail() {
+		this.sendKeysTab(this.email);
+	}
 
 	public void setPassword(String password) {
 		this.sendKeys(this.password, password);
+	}
+	
+	public void setPassword2(String password) {
+		this.sendKeys(this.password2, password);
 	}
 }

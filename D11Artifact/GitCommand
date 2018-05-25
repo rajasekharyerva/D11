@@ -2,4 +2,6 @@ git add ./
 git commit -m "8th commit"
 git status
 git push -u origin master
+git rm $FILE
+git add $FILE
 

@@ -50,13 +50,20 @@ public class BaseTest {
 
 	//@BeforeMethod
 	public void signIn() {
-		
+
 		if(!"https://www.iplt20.com/stats/2018".equals(driver.getCurrentUrl())) {
-			loginPage.clickSignIn();
-			loginPage.clickSignIn();
-			loginPage.setEmail(prop.getProperty("email"));
-			loginPage.setPassword(prop.getProperty("password"));
-			loginPage.clickLogin();
+			if("https://www.ace2three.com/login.html".equals(driver.getCurrentUrl())) {
+				loginPage.setEmail("rj6038");
+				loginPage.pressTabAfterSetEmail();
+				loginPage.setPassword2("b10906038A!");
+				loginPage.clickLogin();
+			} else {
+				loginPage.clickSignIn();
+				loginPage.clickSignIn();
+				loginPage.setEmail(prop.getProperty("email"));
+				loginPage.setPassword(prop.getProperty("password"));
+				loginPage.clickLogin();
+			}
 		}
 	}
 
