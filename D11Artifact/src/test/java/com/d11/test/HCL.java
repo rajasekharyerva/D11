@@ -1,17 +1,32 @@
 package com.d11.test;
 
+import java.util.Scanner;
+
 public class HCL {
 	static int fact=1;
 	//1. public / private
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		System.out.println("Welcome to HCL");
-	}*/
+		//2. Fibonacci Series in Java without using recursion
+		fibonacciIterative();
+		//2.1 Fibonacci Series using recursion in java
+		fibonacciRecursive();
+		//3. Factorial Program using loop in java
+		factorialIterative();
+		//4. Factorial Program using recursion in java
+		factorialRecursive();
+		//5. Triangle Type Program
+		triangleType();
+		//6. Reverse a String in Java
+		strReverse();
+		strReverse2();
+		strReverse3();		
+	}
 	/*private static void main(String[] args) {
 		System.out.println("The method main(String[]) from the type HCL is never used locally");
 	}*/
 
-	//2. Fibonacci Series in Java without using recursion
-	/*public static void main(String args[])  
+	public static void fibonacciIterative()
 	{    
 		int n1=0,n2=1,n3,i,count=10;    
 		System.out.print(n1+" "+n2);//printing 0 and 1    
@@ -22,10 +37,9 @@ public class HCL {
 			n1=n2;    
 			n2=n3;    
 		}    
-	}*/
+	}
 
-	//2.1 Fibonacci Series using recursion in java
-	/*static int n1=0,n2=1,n3=0;    
+	static int n1=0,n2=1,n3=0;    
 	static void printFibonacci(int count){    
 		if(count>0){    
 			n3 = n1 + n2;    
@@ -35,67 +49,63 @@ public class HCL {
 			printFibonacci(count-1);    
 		}    
 	}    
-	public static void main(String args[]){    
+	public static void fibonacciRecursive(){    
 		int count=10;    
 		System.out.print(n1+" "+n2);//printing 0 and 1    
 		printFibonacci(count-2);//n-2 because 2 numbers are already printed   
-	} */
+	} 
 
-	//3. Factorial Program using loop in java
-	/*public static void main(String args[]){  
+	public static void factorialIterative(){  
 		int i,fact=1;  
 		int number=5;//It is the number to calculate factorial    
 		for(i=1;i<=number;i++){    
 			fact=fact*i;    
 		}    
 		System.out.println("Factorial of "+number+" is: "+fact);    
-	}*/
+	}
 
-	//4. Factorial Program using recursion in java
-	/*public static void main(String args[]){  
+	public static void factorialRecursive(){  
 		int i;  
 		int number=4;//It is the number to calculate factorial    
-		//fact = factorial(number); 
-		factorial(number);   
+		fact = factorial(number); 
+		factorialOwn(number);   
 		System.out.println("Factorial of "+number+" is: "+fact);    
-	}*/
+	}
 
-	/*static int factorial(int n){    
-	if (n == 0)    
-		return 1;    
-	else    
-		return(n * factorial(n-1));    
-	} */ 
-	/*static void factorial(int number) {
+	static int factorial(int n){    
+		if (n == 0)    
+			return 1;    
+		else    
+			return(n * factorial(n-1));    
+	}  
+	static void factorialOwn(int number) {
 		if(number>0){
 			fact = number * fact;
 			number = number - 1;
 			factorial(number);
 		}
-	}  */
+	}  
 
-	//5. Triangle Type Program
-	/*public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int a = sc.nextInt();
-        int b = sc.nextInt();
-        int c = sc.nextInt();
+	public static void triangleType() {
+		Scanner sc = new Scanner(System.in);
+		int a = sc.nextInt();
+		int b = sc.nextInt();
+		int c = sc.nextInt();
 
-        if(a==b && b==c)
-            System.out.println("Equilateral");
+		if(a==b && b==c)
+			System.out.println("Equilateral");
 
-        else if(a == (b+c) || c == (b+a) || b == (a+c) )
-            System.out.println("Not a triangle");
+		else if(a == (b+c) || c == (b+a) || b == (a+c) )
+			System.out.println("Not a triangle");
 
-        else if ((a==b && b!=c ) || (a!=b && c==a) || (c==b && c!=a))
-            System.out.println("Isosceles");
+		else if ((a==b && b!=c ) || (a!=b && c==a) || (c==b && c!=a))
+			System.out.println("Isosceles");
 
-        else if(a!=b && b!=c && c!=a)
-            System.out.println("Scalene");
-    }*/
+		else if(a!=b && b!=c && c!=a)
+			System.out.println("Scalene");
+	}
 
 	//6. Test cases for user registration form
-
 	/*Test Scenarios of a Registration Form:
 		Verify that all the specified fields are present on the registration page
 	Verify that the required/mandatory fields are marked with * against the field
@@ -114,7 +124,6 @@ public class HCL {
 	Verify that after making a request to the server and then sending the same request again with the same unique key will lead to server side validation error*/
 
 	//7. Sample Test Cases for Payment Gateway Testing
-	
 	/*Sr#	Test Cases
 	1	During the payment process try to change the payment gateway language
 	2	After successful payment, test all the necessary components, whether it is retrieved or not
@@ -137,59 +146,56 @@ public class HCL {
 	19	Check if each listed payment option opens the respective payment option according to specification
 	20	Verify whether the payment gateway defaults to the desired debit/credit card option
 	21	Verify the default option for debit card shows card selection drop down menu*/
-	
-	
-	// Reverse a String in Java
-		/*public static void main(String[] args)
-		{
-			System.out.println("Enter string to reverse:");
-			
-			Scanner read = new Scanner(System.in);
-			String str = read.nextLine();
-			String reverse = "";
-			
-			for(int i = str.length() - 1; i >= 0; i--)
-			{
-				reverse = reverse + str.charAt(i);
-			}
-			
-			System.out.println("Reversed string is:");
-			System.out.println(reverse);
-		}*/
-		
 
-		    /*public static void main(String[] args)
-		    {
-		        System.out.println("Enter string to reverse:");
-		        
-		        Scanner read = new Scanner(System.in);
-		        String str = read.nextLine();
-		        
-		        StringBuilder sb = new StringBuilder(str);
-		        
-		        System.out.println("Reversed string is:");
-		        System.out.println(sb.reverse().toString());
-		    }
-		    */
-	
-    /*public static void main(String[] args)
-    {
-        System.out.println("Enter string to reverse:");
-        
-        Scanner read = new Scanner(System.in);
-        String str = read.nextLine();
-        
-        StringBuilder sb = new StringBuilder();
-        
-        for(int i = str.length() - 1; i >= 0; i--)
-        {
-            sb.append(str.charAt(i));
-        }
-        
-        System.out.println("Reversed string is:");
-        System.out.println(sb.toString());
-    }*/
-		    
+	public static void strReverse()
+	{
+		System.out.println("Enter string to reverse:");
+
+		Scanner read = new Scanner(System.in);
+		String str = read.nextLine();
+		String reverse = "";
+
+		for(int i = str.length() - 1; i >= 0; i--)
+		{
+			reverse = reverse + str.charAt(i);
+		}
+
+		System.out.println("Reversed string is:");
+		System.out.println(reverse);
+	}
+
+
+	public static void strReverse2()
+	{
+		System.out.println("Enter string to reverse:");
+
+		Scanner read = new Scanner(System.in);
+		String str = read.nextLine();
+
+		StringBuilder sb = new StringBuilder(str);
+
+		System.out.println("Reversed string is:");
+		System.out.println(sb.reverse().toString());
+	}
+
+
+	public static void strReverse3()
+	{
+		System.out.println("Enter string to reverse:");
+
+		Scanner read = new Scanner(System.in);
+		String str = read.nextLine();
+
+		StringBuilder sb = new StringBuilder();
+
+		for(int i = str.length() - 1; i >= 0; i--)
+		{
+			sb.append(str.charAt(i));
+		}
+
+		System.out.println("Reversed string is:");
+		System.out.println(sb.toString());
+	}
 
 	// Difference between String and StringBuffer/StringBuilder in java is that 
 	/*String object is immutable whereas StringBuffer/StringBuilder objects are mutable. 
@@ -198,7 +204,7 @@ public class HCL {
 	StringBuffer is synchronized( which means it is thread safe and hence you can use it when you implement threads for your methods) 
 	whereas StringBuilder is not synchronized( which implies it isn’t thread safe).
 	So, if you aren’t going to use threading then use the StringBuilder class as it’ll be more efficient than StringBuffer due to the absence of synchronization.*/
-	
+
 	//Array Vs. Arraylist
 	/*Array	ArrayList
 	Array is a fixed length data structure whose length cannot be modified once array object is created.	ArrayList is dynamic in nature which means it can resize itself to grow when required.
@@ -212,12 +218,10 @@ public class HCL {
 	Takes less memory than ArrayList to store specified elements or objects.	Takes more memory than the Array to store objects.
 	Iterating over an array is faster than iterating over an ArrayList.	Iterating over an ArrayList is significantly slower in terms of performance.*/
 
-
 	// HashSet vs HashMap
-
-		/*HASHSET	HASHMAP
-		HashSet class implements the Set interface	HashMap class implements the Map interface
-		In HashSet we store objects(elements or values) e.g. If we have a HashSet of string elements then it could depict a set of HashSet elements: {“Hello”, “Hi”, “Bye”, “Run”}	HashMap is used for storing key & value pairs. In short it maintains the mapping of key & value (The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.) This is how you could represent HashMap elements if it has integer key and value of String type: e.g. {1->”Hello”, 2->”Hi”, 3->”Bye”, 4->”Run”}
-		HashSet does not allow duplicate elements that means you can not store duplicate values in HashSet.	HashMap does not allow duplicate keys however it allows to have duplicate values.
-		HashSet permits to have a single null value.	HashMap permits single null key and any number of null values.*/	
+	/*HASHSET	HASHMAP
+	HashSet class implements the Set interface	HashMap class implements the Map interface
+	In HashSet we store objects(elements or values) e.g. If we have a HashSet of string elements then it could depict a set of HashSet elements: {“Hello”, “Hi”, “Bye”, “Run”}	HashMap is used for storing key & value pairs. In short it maintains the mapping of key & value (The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.) This is how you could represent HashMap elements if it has integer key and value of String type: e.g. {1->”Hello”, 2->”Hi”, 3->”Bye”, 4->”Run”}
+	HashSet does not allow duplicate elements that means you can not store duplicate values in HashSet.	HashMap does not allow duplicate keys however it allows to have duplicate values.
+	HashSet permits to have a single null value.	HashMap permits single null key and any number of null values.*/	
 }
