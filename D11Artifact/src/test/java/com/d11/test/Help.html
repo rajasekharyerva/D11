@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table { 
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 2px;
+    border-color: gray;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.bg {
+    /* The image used */
+    background-image: url("brezza.png");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.1;
+}
+
+table, td, th {
+    border: 1px solid black;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 1px;
+    padding: 5px 0;
+    opacity: 0.8;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+</style>
+<meta charset="UTF-8">
+<title>Help</title>
+</head>
+<body>
+ <div>
+  <table>
+   <tr>
+    <td><input type="checkbox"></input></td>
+    <td>1</td>
+    <td>QA</td>
+   </tr>
+   <tr>
+    <td><input type="checkbox"></input></td>
+    <td>2</td>
+    <td>PERF</td>
+   </tr>
+   <tr>
+    <td><input type="checkbox"></input></td>
+    <td>3</td>
+    <td>PROD</td>
+   </tr>
+  </table>
+</div>
+</body>
+</html>

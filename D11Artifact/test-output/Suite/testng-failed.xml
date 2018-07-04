@@ -3,14 +3,14 @@
 <suite thread-count="1" configfailurepolicy="continue" guice-stage="DEVELOPMENT" name="Failed suite [Suite]" parallel="classes">
   <test thread-count="1" name="Web(failed)" parallel="classes">
     <classes>
-      <class name="com.d11.test.UnDeuxTrois">
+      <class name="com.d11.test.GetPlayerStats">
         <methods>
+          <include name="getD11MoneyStats"/>
           <include name="signOut"/>
           <include name="quitDriver"/>
-          <include name="writeToMaster"/>
           <include name="readProperties"/>
         </methods>
-      </class> <!-- com.d11.test.UnDeuxTrois -->
+      </class> <!-- com.d11.test.GetPlayerStats -->
     </classes>
   </test> <!-- Web(failed) -->
 </suite> <!-- Failed suite [Suite] -->

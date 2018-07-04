@@ -53,9 +53,9 @@ public class BaseTest {
 
 		if(!"https://www.iplt20.com/stats/2018".equals(driver.getCurrentUrl())) {
 			if("https://www.ace2three.com/login.html".equals(driver.getCurrentUrl())) {
-				loginPage.setEmail("rj6038");
+				loginPage.setEmail("xxxx");
 				loginPage.pressTabAfterSetEmail();
-				loginPage.setPassword2("b10906038A!");
+				loginPage.setPassword2("xxxxx");
 				loginPage.clickLogin();
 			} else {
 				loginPage.clickSignIn();

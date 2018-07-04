@@ -3,14 +3,15 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.d11.test.ReactDatePicker">
+      <class name="com.d11.test.SDET">
         <methods>
-          <include name="signOut"/>
-          <include name="quitDriver"/>
-          <include name="getD11PlayerStats"/>
-          <include name="readProperties"/>
+          <include name="skipTest"/>
+          <include name="getResult"/>
+          <include name="failTest"/>
+          <include name="startReport"/>
+          <include name="endReport"/>
         </methods>
-      </class> <!-- com.d11.test.ReactDatePicker -->
+      </class> <!-- com.d11.test.SDET -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

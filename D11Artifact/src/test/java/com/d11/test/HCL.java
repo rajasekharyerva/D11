@@ -12,8 +12,14 @@ public class HCL {
 		//2.1 Fibonacci Series using recursion in java
 		fibonacciRecursive();
 		//3. Factorial Program using loop in java
+		//Complexity of iterative Fibonacci –
+		//For this it will be O(n)
 		factorialIterative();
 		//4. Factorial Program using recursion in java
+		//Complexity of recursive Fibonacci –
+		//The recursive equation for this algorithm is T(n)=T(n−1)+T(n−2)+Θ(1)
+		//For this it will be T(n)=Θ(ϕn)
+		//where ϕ is the golden ratio (ϕ=(1+5√) / 2).
 		factorialRecursive();
 		//5. Triangle Type Program
 		triangleType();
