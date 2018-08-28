@@ -1,0 +1,24 @@
+mutation ($data: StudentInput!) { addStudent(data: $data)}
+===>
+{
+	"data": {
+		"_id": "569e737beb914d53eccef868",
+            	"name": "Second post",
+            	"address": "My second post on my blog"
+        }
+}
+===========================================================
+mutation ($_id: ID!){removeStudent(_id: $_id) {
+  _id,
+  name,
+  address
+}
+} 
+===>
+{
+    "_id": "569e737beb914d53eccef868"
+}
+===========================================================
+mutation {removeAllStudents}
+===========================================================
+
